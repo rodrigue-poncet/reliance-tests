@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RELIANCE® — Plateforme d'Évaluation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--p:#2C5F7A;--pd:#074F6A;--pl:#3A7A96;--o:#E97132;--od:#D4621F;--cr:#F7F4EF;--cd:#EDE9E1;--tx:#1A2730;--tl:#5A7080;--w:#fff;--ok:#2A7A4B;--er:#C0392B;--br:rgba(44,95,122,.15);--go:#B5954A;}
+*{margin:0;padding:0;box-sizing:border-box;}button{-webkit-appearance:none;appearance:none;}
+body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--tx);min-height:100vh;}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+#screen-login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#074F6A 0%,#0A6A8A 60%,#074F6A 100%);position:relative;overflow:hidden;}
+#screen-login::before{content:'';position:absolute;top:-30%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(233,113,50,.1),transparent 65%);pointer-events:none;}
+.lbox{background:rgba(247,244,239,.07);backdrop-filter:blur(24px);border:1px solid rgba(247,244,239,.18);border-radius:22px;padding:52px 44px;width:100%;max-width:440px;position:relative;z-index:1;animation:up .55s ease;}
+.llogo{text-align:center;margin-bottom:20px;}
+.llogo .brand{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--cr);letter-spacing:.1em;line-height:1;}
+.llogo .brand span{color:var(--o);}
+.llogo .sub{font-size:.7rem;color:rgba(247,244,239,.5);letter-spacing:.24em;text-transform:uppercase;margin-top:6px;}
+.ltabs{display:flex;margin-bottom:24px;border-radius:10px;overflow:hidden;border:1px solid rgba(247,244,239,.2);}
+.ltab{flex:1;padding:10px;background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.78rem;color:rgba(247,244,239,.5);transition:all .2s;}
+.ltab.act{background:rgba(247,244,239,.15);color:var(--cr);font-weight:500;}
+.llbl{font-size:.72rem;color:rgba(247,244,239,.6);letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px;display:block;}
+.linp{width:100%;padding:13px 16px;background:rgba(247,244,239,.1);border:1px solid rgba(247,244,239,.2);border-radius:10px;color:var(--cr);font-family:'DM Sans',sans-serif;font-size:.95rem;transition:all .2s;margin-bottom:14px;}
+.linp::placeholder{color:rgba(247,244,239,.28);}
+.linp:focus{outline:none;border-color:var(--o);background:rgba(247,244,239,.15);}
+.lerr{color:#FF8A80;font-size:.8rem;margin-bottom:12px;display:none;text-align:center;}
+.lbtn{width:100%;padding:14px;background:#E97132;background:var(--o);color:white;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;-webkit-appearance:none;appearance:none;max-height:52px;}
+.lbtn:hover{background:var(--od);transform:translateY(-1px);}
+.ladm{text-align:center;margin-top:16px;font-size:.72rem;color:rgba(247,244,239,.3);cursor:pointer;transition:color .2s;}
+.ladm:hover{color:rgba(247,244,239,.55);}
+
+.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:none;align-items:center;justify-content:center;}
+.moverlay.open{display:flex;}
+.mbox{background:white;border-radius:16px;padding:34px;max-width:500px;width:90vw;max-height:85vh;overflow-y:auto;}
+.mbox h3{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--pd);margin-bottom:18px;}
+.mclose{float:right;padding:5px 12px;background:transparent;border:1px solid var(--br);border-radius:6px;cursor:pointer;font-size:.78rem;color:var(--tl);}
+
+#screen-intro{display:none;min-height:100vh;}
+.ihero{background:linear-gradient(135deg,var(--pd),var(--p));padding:54px 40px 46px;text-align:center;color:white;position:relative;overflow:hidden;}
+.ihero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(233,113,50,.12),transparent 60%);}
+.ibadge{display:inline-block;padding:6px 16px;border:1px solid rgba(233,113,50,.5);border-radius:20px;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(247,244,239,.7);margin-bottom:16px;}
+.ihero h1{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;margin-bottom:9px;position:relative;}
+.ihero .isub{font-size:.97rem;color:rgba(247,244,239,.7);max-width:500px;margin:0 auto 7px;line-height:1.6;position:relative;}
+.ihero .iwelc{font-size:.84rem;color:rgba(233,113,50,.9);margin-top:11px;font-weight:500;position:relative;}
+.ibody{max-width:820px;margin:0 auto;padding:42px 20px 56px;}
+.icard{background:white;border-radius:16px;padding:32px;margin-bottom:16px;border:1px solid var(--br);animation:up .4s ease;}
+.icard-icon{font-size:1.7rem;margin-bottom:11px;}
+.icard h3{font-family:'Cormorant Garamond',serif;font-size:1.28rem;color:var(--pd);margin-bottom:10px;}
+.icard p{font-size:.86rem;color:var(--tl);line-height:1.72;margin-bottom:7px;}
+.icard p strong{color:var(--tx);}
+.icard ul{font-size:.86rem;color:var(--tx);line-height:1.72;padding-left:18px;margin-top:5px;}
+.igrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin-bottom:16px;}
+.imini{background:rgba(44,95,122,.05);border:1px solid var(--br);border-radius:12px;padding:16px;text-align:center;}
+.imini .mico{font-size:1.45rem;margin-bottom:6px;}
+.imini h4{font-size:.82rem;font-weight:600;color:var(--pd);margin-bottom:3px;}
+.imini p{font-size:.75rem;color:var(--tl);line-height:1.5;}
+.cred{background:rgba(44,95,122,.04);border-left:4px solid var(--p);border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:11px;}
+.cred h4{font-size:.77rem;font-weight:600;color:var(--pd);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;}
+.cred p{font-size:.84rem;color:var(--tx);line-height:1.68;}
+.prot{background:rgba(181,149,74,.04);border-left:4px solid var(--go);border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:11px;}
+.prot h4{font-size:.77rem;font-weight:600;color:var(--go);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;}
+.prot ul{font-size:.84rem;color:var(--tx);line-height:1.68;padding-left:16px;}
+.legal-quote{background:rgba(7,79,106,.06);border:1px solid rgba(7,79,106,.2);border-radius:10px;padding:16px 20px;margin-bottom:12px;font-size:.84rem;color:var(--tx);line-height:1.75;font-style:italic;}
+.devbox{background:#1A2730;border-radius:12px;padding:18px 20px;margin-top:12px;}
+.devbox-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+.devbox-lbl{font-size:.68rem;color:rgba(247,244,239,.38);letter-spacing:.12em;text-transform:uppercase;}
+.devbox-copy{padding:5px 11px;background:var(--o);border:none;border-radius:6px;color:white;font-size:.7rem;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.devbox pre{font-family:monospace;font-size:.77rem;color:#A8D8EA;line-height:1.7;white-space:pre-wrap;}
+.ibtn{display:block;width:100%;padding:16px;background:#2C5F7A;background:var(--p);color:white;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;text-align:center;margin-top:7px;-webkit-appearance:none;appearance:none;}
+.ibtn:hover{background:var(--pd);transform:translateY(-1px);}
+
+#screen-dashboard{display:none;min-height:100vh;}
+.dh{background:var(--pd);padding:17px 38px;display:flex;align-items:center;justify-content:space-between;}
+.dh-brand{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;color:var(--cr);letter-spacing:.07em;}
+.dh-brand span{color:var(--o);}
+.dh-user{display:flex;align-items:center;gap:11px;}
+.dh-uname{font-size:.8rem;color:rgba(247,244,239,.6);}
+.btn-out{padding:7px 13px;background:transparent;border:1px solid rgba(247,244,239,.24);border-radius:20px;color:rgba(247,244,239,.5);font-size:.73rem;cursor:pointer;transition:all .2s;}
+.btn-out:hover{border-color:var(--o);color:var(--o);}
+.dbody{padding:42px 38px;max-width:1080px;margin:0 auto;}
+.dwelc{margin-bottom:38px;}
+.dwelc h1{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:300;color:var(--pd);margin-bottom:7px;}
+.dwelc p{color:var(--tl);font-size:.87rem;line-height:1.65;max-width:540px;}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:19px;}
+.tcard{background:white;border-radius:16px;padding:30px 26px;border:1px solid var(--br);position:relative;overflow:hidden;transition:all .3s;cursor:pointer;}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 13px 42px rgba(44,95,122,.13);border-color:var(--p);}
+.tcard.done{border-color:var(--ok);background:linear-gradient(135deg,white,#F0FAF4);}
+.tcnum{font-family:'Cormorant Garamond',serif;font-size:3.6rem;font-weight:300;color:var(--cd);position:absolute;top:13px;right:19px;line-height:1;}
+.tcico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:14px;}
+.ico-v{background:rgba(44,95,122,.1);}
+.ico-o{background:rgba(233,113,50,.1);}
+.ico-s{background:rgba(7,79,106,.1);}
+.tcsub{font-size:.68rem;color:var(--o);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
+.tctitle{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:600;color:var(--pd);margin-bottom:8px;}
+.tcdesc{font-size:.8rem;color:var(--tl);line-height:1.6;margin-bottom:14px;}
+.tcmeta{display:flex;gap:11px;font-size:.71rem;color:var(--tl);margin-bottom:11px;}
+.tcmeta span::before{content:'·';margin-right:3px;color:var(--o);}
+.bavail{display:inline-block;padding:5px 11px;border-radius:20px;font-size:.68rem;font-weight:500;background:rgba(44,95,122,.1);color:var(--p);}
+.bdone{display:inline-block;padding:5px 11px;border-radius:20px;font-size:.68rem;font-weight:500;background:rgba(42,122,75,.1);color:var(--ok);}
+.dfoot{margin-top:46px;padding-top:18px;border-top:1px solid var(--br);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;}
+.dfoot-brand{font-size:.78rem;color:var(--tl);}
+
+#screen-test{display:none;min-height:100vh;background:var(--cr);}
+.ttop{background:white;border-bottom:1px solid var(--br);padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:13px;}
+.ttitle{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:var(--pd);white-space:nowrap;}
+.pwrap{flex:1;max-width:300px;}
+.plbl{display:flex;justify-content:space-between;font-size:.68rem;color:var(--tl);margin-bottom:4px;}
+.pbar{height:4px;background:var(--cd);border-radius:2px;overflow:hidden;}
+.pfill{height:100%;background:linear-gradient(90deg,var(--p),var(--o));border-radius:2px;transition:width .4s ease;}
+.spill{font-size:.7rem;color:var(--tl);padding:4px 9px;border:1px solid var(--br);border-radius:20px;white-space:nowrap;}
+.spill.warn{color:var(--o);border-color:rgba(233,113,50,.3);}
+.spill.none{color:var(--er);border-color:rgba(192,57,43,.3);}
+.btn-bk{padding:6px 13px;background:transparent;border:1px solid var(--br);border-radius:20px;color:var(--tl);font-size:.73rem;cursor:pointer;transition:all .2s;}
+.btn-bk:hover{border-color:var(--p);color:var(--p);}
+.tcont{max-width:730px;margin:0 auto;padding:40px 18px 76px;}
+.qblk{display:none;animation:up .3s ease;}
+.qblk.act{display:block;}
+.qnum{font-size:.7rem;color:var(--o);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px;}
+.qtxt{font-family:'Cormorant Garamond',serif;font-size:1.42rem;font-weight:400;color:var(--tx);line-height:1.55;margin-bottom:7px;}
+.qctx{font-size:.81rem;color:var(--tl);margin-bottom:28px;line-height:1.6;font-style:italic;}
+.lkrt{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-bottom:11px;}
+.llbls{display:flex;justify-content:space-between;font-size:.67rem;color:var(--tl);margin-bottom:19px;}
+.lbtn{aspect-ratio:1;border:2px solid var(--br);border-radius:10px;background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.lbtn .vn{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:600;color:var(--tl);}
+.lbtn:hover{border-color:var(--p);background:rgba(44,95,122,.05);transform:translateY(-2px);}
+.lbtn.sel{border-color:var(--p);background:var(--p);}
+.lbtn.sel .vn{color:white;}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:19px;}
+.obtn{padding:14px 19px;background:white;border:2px solid var(--br);border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .2s;text-align:left;}
+.obtn:hover{border-color:var(--p);background:rgba(44,95,122,.03);}
+.obtn.sel{border-color:var(--p);background:rgba(44,95,122,.06);}
+.obtn.sel .radio{background:var(--p);border-color:var(--p);}
+.obtn.sel .radio::after{opacity:1;}
+.radio{width:17px;height:17px;min-width:17px;border-radius:50%;border:2px solid var(--br);position:relative;transition:all .2s;}
+.radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:white;opacity:0;transition:opacity .2s;}
+.otxt{font-size:.87rem;color:var(--tx);line-height:1.4;}
+.navbtns{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:9px;}
+.btn-prev{padding:10px 19px;background:transparent;border:1px solid var(--br);border-radius:8px;color:var(--tl);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.83rem;transition:all .2s;}
+.btn-prev:hover{border-color:var(--p);color:var(--p);}
+.btn-skip{padding:10px 15px;background:transparent;border:1px dashed rgba(90,112,128,.38);border-radius:8px;color:var(--tl);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.79rem;transition:all .2s;}
+.btn-skip:hover:not(:disabled){border-color:var(--o);color:var(--o);}
+.btn-skip:disabled{opacity:.3;cursor:not-allowed;}
+.btn-next{padding:11px 27px;background:#2C5F7A;background:var(--p);color:white;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.83rem;font-weight:500;transition:all .2s;-webkit-appearance:none;appearance:none;}
+.btn-next:hover{background:var(--pd);}
+.btn-next:disabled{opacity:.4;cursor:not-allowed;}
+
+#screen-results{display:none;min-height:100vh;background:var(--cr);}
+.rh{background:linear-gradient(135deg,var(--pd),var(--p));padding:48px 38px 40px;text-align:center;color:white;}
+.rh .rlbl{font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(247,244,239,.5);margin-bottom:9px;}
+.rh h2{font-family:'Cormorant Garamond',serif;font-size:2.15rem;font-weight:300;margin-bottom:6px;}
+.rh .runame{font-size:.9rem;color:rgba(247,244,239,.68);}
+.rbody{max-width:830px;margin:0 auto;padding:40px 18px;}
+.rsec{background:white;border-radius:16px;padding:32px;margin-bottom:19px;border:1px solid var(--br);}
+.rsec h3{font-family:'Cormorant Garamond',serif;font-size:1.28rem;color:var(--pd);margin-bottom:20px;}
+.bitem{margin-bottom:11px;}
+.brow{display:flex;justify-content:space-between;margin-bottom:4px;font-size:.81rem;}
+.bname{font-weight:500;color:var(--tx);}
+.bscore{color:var(--p);font-weight:500;}
+.btrack{height:7px;background:var(--cd);border-radius:4px;overflow:hidden;}
+.bfill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--p),var(--o));transition:width 1s cubic-bezier(.4,0,.2,1);width:0;}
+.codeblk{background:var(--pd);color:white;border-radius:12px;padding:19px 23px;margin-top:19px;}
+.cblbl{font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(247,244,239,.5);margin-bottom:6px;}
+.cbval{font-family:'Cormorant Garamond',serif;font-size:2.3rem;font-weight:300;letter-spacing:.2em;color:var(--o);}
+.cbsub{font-size:.82rem;color:rgba(247,244,239,.62);margin-top:3px;}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:9px;margin-top:14px;}
+.rchip{padding:10px 13px;background:rgba(44,95,122,.05);border:1px solid rgba(44,95,122,.13);border-radius:8px;text-decoration:none;display:flex;flex-direction:column;gap:3px;transition:all .2s;}
+.rchip:hover{background:rgba(44,95,122,.1);border-color:var(--p);transform:translateY(-1px);}
+.rccode{font-size:.68rem;font-weight:600;color:var(--o);letter-spacing:.07em;}
+.rcname{font-size:.78rem;color:var(--tx);}
+.mbig{text-align:center;margin-bottom:27px;}
+.mltrs{font-family:'Cormorant Garamond',serif;font-size:4.4rem;font-weight:300;color:var(--pd);letter-spacing:.15em;line-height:1;}
+.mname{font-size:1rem;color:var(--o);font-weight:500;margin-top:6px;}
+.maxes{display:flex;flex-direction:column;gap:12px;margin-top:22px;}
+.maxe{display:grid;grid-template-columns:90px 1fr 90px;align-items:center;gap:8px;}
+.albl{font-size:.75rem;color:var(--tl);font-weight:500;}
+.albl.right{text-align:right;}
+.albl.dom{color:var(--pd);}
+.abar{height:7px;background:var(--cd);border-radius:4px;overflow:hidden;}
+.afill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--p),var(--o));transition:width 1s ease;width:0;}
+.vtop3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;}
+.vcard{background:var(--cr);border-radius:12px;padding:15px 11px;text-align:center;border:1px solid var(--br);}
+.vcard .vrank{font-family:'Cormorant Garamond',serif;font-size:1.75rem;color:var(--o);line-height:1;margin-bottom:3px;}
+.vcard .vn{font-size:.8rem;font-weight:500;color:var(--pd);margin-bottom:3px;}
+.vcard .vd{font-size:.7rem;color:var(--tl);line-height:1.45;}
+.pdesc{background:linear-gradient(135deg,rgba(44,95,122,.05),rgba(233,113,50,.04));border-radius:12px;padding:19px;margin-top:19px;border-left:3px solid var(--o);}
+.pdesc p{font-size:.86rem;color:var(--tx);line-height:1.7;}
+.rcodebox{background:linear-gradient(135deg,var(--pd),var(--p));border-radius:16px;padding:28px;text-align:center;color:white;margin-bottom:19px;}
+.rcodebox p{font-size:.79rem;color:rgba(247,244,239,.66);margin-bottom:12px;line-height:1.65;}
+.rcbig{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;letter-spacing:.25em;color:var(--o);border:1px solid rgba(233,113,50,.4);border-radius:10px;padding:10px 21px;display:inline-block;margin-bottom:14px;}
+.btn-cpr{padding:9px 18px;background:rgba(247,244,239,.15);border:1px solid rgba(247,244,239,.3);border-radius:8px;color:white;font-family:'DM Sans',sans-serif;font-size:.79rem;cursor:pointer;transition:all .2s;margin-right:6px;}
+.btn-cpr:hover{background:rgba(247,244,239,.25);}
+.btn-eml{padding:9px 18px;background:var(--o);border:none;border-radius:8px;color:white;font-family:'DM Sans',sans-serif;font-size:.79rem;cursor:pointer;transition:all .2s;}
+.btn-eml:hover{background:var(--od);}
+.ract{display:flex;gap:11px;margin-top:24px;flex-wrap:wrap;}
+.btn-pdf{padding:11px 22px;background:var(--pd);color:white;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;transition:all .2s;}
+.btn-pdf:hover{background:var(--p);}
+.btn-bdash{padding:11px 22px;background:transparent;color:var(--tl);border:1px solid var(--br);border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;transition:all .2s;}
+.btn-bdash:hover{border-color:var(--p);color:var(--p);}
+
+#screen-admin{display:none;min-height:100vh;background:var(--cr);}
+.ah{background:var(--pd);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+.ah-title{font-family:'Cormorant Garamond',serif;font-size:1.28rem;color:var(--cr);font-weight:300;}
+.atabs{display:flex;border-radius:8px;overflow:hidden;border:1px solid rgba(247,244,239,.2);}
+.atab{padding:7px 15px;background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.75rem;color:rgba(247,244,239,.46);transition:all .2s;}
+.atab.act{background:rgba(247,244,239,.15);color:var(--cr);}
+.abody{max-width:940px;margin:0 auto;padding:36px 18px;}
+.apanel{display:none;}
+.apanel.act{display:block;}
+.asec{background:white;border-radius:16px;padding:26px;margin-bottom:16px;border:1px solid var(--br);}
+.asec h3{font-family:'Cormorant Garamond',serif;font-size:1.18rem;color:var(--pd);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--br);}
+.fr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.fg{display:flex;flex-direction:column;gap:4px;}
+.fl{font-size:.7rem;color:var(--tl);letter-spacing:.08em;text-transform:uppercase;}
+.fi{padding:9px 12px;border:1px solid var(--br);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.84rem;color:var(--tx);transition:border-color .2s;}
+.fi:focus{outline:none;border-color:var(--p);}
+.ckrow{display:flex;gap:15px;margin-bottom:12px;flex-wrap:wrap;}
+.cki{display:flex;align-items:center;gap:6px;font-size:.81rem;color:var(--tx);cursor:pointer;}
+.cki input{cursor:pointer;accent-color:var(--p);}
+.btn-cr{padding:10px 19px;background:var(--o);color:white;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.81rem;font-weight:500;transition:all .2s;}
+.btn-cr:hover{background:var(--od);}
+.tbl{width:100%;border-collapse:collapse;font-size:.79rem;}
+.tbl th{padding:8px 11px;background:var(--cr);color:var(--tl);font-weight:500;text-align:left;font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;}
+.tbl td{padding:10px 11px;border-top:1px solid var(--br);color:var(--tx);}
+.cv{font-family:monospace;font-size:.85rem;color:var(--pd);font-weight:500;}
+.b-ok{padding:2px 8px;background:rgba(42,122,75,.1);color:var(--ok);border-radius:20px;font-size:.68rem;font-weight:500;}
+.b-ex{padding:2px 8px;background:rgba(90,112,128,.1);color:var(--tl);border-radius:20px;font-size:.68rem;}
+.b-su{padding:2px 8px;background:rgba(192,57,43,.1);color:var(--er);border-radius:20px;font-size:.68rem;}
+.bsm{padding:3px 8px;background:transparent;border:1px solid var(--br);border-radius:4px;cursor:pointer;font-size:.68rem;color:var(--tl);transition:all .2s;margin-left:2px;}
+.bsm:hover{border-color:var(--p);color:var(--p);}
+.bsm-del{padding:3px 8px;background:transparent;border:1px solid rgba(192,57,43,.2);border-radius:4px;cursor:pointer;font-size:.68rem;color:var(--er);transition:all .2s;margin-left:2px;}
+.bsm-del:hover{background:rgba(192,57,43,.05);}
+.bsm-sus{padding:3px 8px;background:transparent;border:1px solid rgba(181,149,74,.3);border-radius:4px;cursor:pointer;font-size:.68rem;color:var(--go);transition:all .2s;margin-left:2px;}
+.rentry{background:var(--cr);border-radius:10px;padding:15px 17px;margin-bottom:9px;border:1px solid var(--br);}
+.rentry-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.rentry-n{font-weight:500;color:var(--pd);font-size:.87rem;}
+.rentry-d{font-size:.7rem;color:var(--tl);}
+.tbadge{padding:3px 9px;background:rgba(44,95,122,.08);border-radius:20px;font-size:.69rem;color:var(--p);font-weight:500;}
+.rcode{font-family:monospace;font-size:.75rem;color:var(--tl);margin-top:4px;}
+.btn-view{padding:4px 10px;background:var(--p);color:white;border:none;border-radius:6px;cursor:pointer;font-size:.69rem;transition:all .2s;}
+.btn-view:hover{background:var(--pd);}
+.nodata{text-align:center;color:var(--tl);font-size:.85rem;padding:34px;}
+
+.toast{position:fixed;bottom:24px;right:24px;padding:11px 19px;background:var(--pd);color:white;border-radius:10px;font-size:.83rem;z-index:9999;display:none;animation:up .3s ease;box-shadow:0 8px 26px rgba(0,0,0,.2);}
+
+@media print{
+  #screen-login,#screen-dashboard,#screen-test,#screen-admin,#screen-intro,.ttop,.ract,.btn-bdash,.rcodebox{display:none!important;}
+  #screen-results{display:block!important;}
+  .rh{background:var(--pd)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{background:white;}
+}
+@media(max-width:620px){
+  .lbox{padding:28px 16px;margin:12px;}
+  .dbody,.abody{padding:22px 13px;}
+  .tgrid{grid-template-columns:1fr;}
+  .fr,.fr2{grid-template-columns:1fr;}
+  .lkrt{grid-template-columns:repeat(3,1fr);}
+  .vtop3{grid-template-columns:1fr;}
+  .maxe{grid-template-columns:70px 1fr 70px;}
+}
+</style>
+</head>
+<body>
+
+<div id="screen-login">
+  <div class="lbox">
+    <div class="llogo">
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:12px;">
+        <img id="logo-login" alt="RP Coaching" style="height:64px;filter:brightness(0) invert(1);">
+        <div style="text-align:left;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:white;letter-spacing:.06em;line-height:1.15;">TESTS RELIANCE<span style="font-size:1rem;vertical-align:super;font-size:.75em;">®</span></div>
+          <div style="font-size:.68rem;color:rgba(247,244,239,.5);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;">Plateforme d'évaluation</div>
+        </div>
+      </div>
+      <div class="sub" style="font-size:.62rem;opacity:.6;">Méthode RELIANCE® · Marque déposée INPI</div>
+    </div>
+    <div class="ltabs">
+      <button class="ltab act" id="tab-b" onclick="setTab('b')">Bénéficiaire</button>
+      <button class="ltab" id="tab-c" onclick="setTab('c')">Consultant</button>
+    </div>
+    <label class="llbl" id="lbl-name">Votre prénom et nom</label>
+    <input type="text" class="linp" id="inp-name" placeholder="Ex : Marie Dupont" autocomplete="off">
+    <label class="llbl" id="lbl-code">Code d'accès</label>
+    <input type="text" class="linp" id="inp-code" placeholder="Ex : RP-ABC-1234" autocomplete="off">
+    <div class="lerr" id="lerr"></div>
+    <button id="btn-login-main" class="lbtn" onclick="doLogin()" style="background:#E97132;color:white;-webkit-appearance:none;padding:14px;max-height:52px;">Accéder →</button>
+    <div class="ladm" onclick="openM('m-admpw')">&#9881; Accès dirigeant</div>
+    <div class="ladm" style="margin-top:6px;font-size:.68rem;" onclick="openM('m-apropos')">&#9432; À propos des évaluations</div>
+  </div>
+</div>
+
+<div class="moverlay" id="m-admpw">
+  <div class="mbox" style="max-width:330px;">
+    <h3>Accès dirigeant</h3>
+    <input type="password" id="admpw" class="fi" placeholder="Mot de passe" style="width:100%;margin-bottom:9px;padding:11px 13px;">
+    <div id="admpw-err" style="color:var(--er);font-size:.78rem;margin-bottom:9px;display:none;">Mot de passe incorrect.</div>
+    <div style="display:flex;gap:9px;">
+      <button class="btn-cr" style="flex:1;" onclick="doAdminLogin()">Connexion</button>
+      <button class="btn-bdash" style="padding:10px 13px;" onclick="closeM('m-admpw')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="moverlay" id="m-apropos">
+  <div class="mbox">
+    <button class="mclose" onclick="closeM('m-apropos')">&#10005; Fermer</button>
+    <h3>À propos des évaluations RELIANCE®</h3>
+    <div style="font-size:.83rem;color:var(--tx);line-height:1.75;">
+      <div style="margin-bottom:16px;">
+        <strong style="color:var(--pd);">Boussole de Valeurs — Modèle Schwartz</strong>
+        <p style="margin-top:4px;">Fondé sur les travaux de Shalom H. Schwartz (1992), validé dans plus de 80 pays et plus de 200 études scientifiques. Identifie 10 valeurs humaines universelles structurées en continuum. Les questions RELIANCE® utilisent une reformulation projective originale pour réduire les biais de désirabilité sociale.</p>
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong style="color:var(--pd);">Orientation Professionnelle — Modèle RIASEC (Holland)</strong>
+        <p style="margin-top:4px;">Fondé sur les travaux de John L. Holland (1959-1997). Cadre d’orientation le plus utilisé au monde, intégré dans les systèmes France Travail, ONISEP et OCDE. Les résultats sont directement explorés via le moteur RIASEC-ROME de France Travail.</p>
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong style="color:var(--pd);">Signature Comportementale — Inspiré du MBTI</strong>
+        <p style="margin-top:4px;">Inspiré de la théorie des types psychologiques de C.G. Jung (1921), popularisée par Myers &amp; Briggs. Le 5ème axe s’appuie sur le modèle Big Five. Aucune question ne reproduit les instruments sous copyright. Toutes les formulations sont originales et propriété de RP Coaching &amp; Formation.</p>
+      </div>
+      <div style="background:rgba(44,95,122,.05);border-radius:8px;padding:12px 14px;font-size:.79rem;color:var(--tl);">
+        Ces évaluations sont des <strong>supports de réflexion professionnelle</strong> utilisés dans le cadre d’un bilan de compétences (L.6313-4 du Code du travail). Elles ne constituent pas des tests psychométriques certifiés ni des diagnostics cliniques.
+        <br><br>RP Coaching &amp; Formation — SIRET 851 939 322 00042 — Certifié Qualiopi — Méthode RELIANCE® déposée à l’INPI
+      </div>
+    </div>
+  </div>
+</div>
+<div id="screen-intro">
+  <div class="ihero">
+    <div class="ibadge" id="ibadge">Bienvenue</div>
+    <h1 id="ih1">RELIANCE&#174;</h1>
+    <div class="isub" id="isub"></div>
+    <div class="iwelc" id="iwelc"></div>
+  </div>
+  <div class="ibody" id="ibody"></div>
+</div>
+
+<div id="screen-dashboard">
+  <div class="dh">
+    <div class="dh-brand" style="display:flex;align-items:center;gap:13px;">
+      <img id="logo-dash" alt="RP Coaching" style="height:44px;filter:brightness(0) invert(1);">
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--cr);letter-spacing:.06em;line-height:1.15;">TESTS RELIANCE<span style="font-size:.65em;vertical-align:super;">®</span></div>
+        <div style="font-size:.62rem;color:rgba(247,244,239,.42);letter-spacing:.14em;text-transform:uppercase;margin-top:1px;">Méthode RELIANCE®</div>
+      </div>
+    </div>
+    <div class="dh-user">
+      <div class="dh-uname" id="dh-uname"></div>
+      <button class="btn-out" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </div>
+  <div class="dbody">
+    <div class="dwelc">
+      <h1 id="dgreet">Bonjour</h1>
+      <p>Voici vos tests disponibles. Réalisez-les dans l'ordre recommandé pour une expérience optimale.</p>
+    </div>
+    <div class="tgrid" id="tgrid"></div>
+    <div class="dfoot">
+      <div class="dfoot-brand">RP Coaching &amp; Formation · Méthode RELIANCE® · Marque déposée INPI</div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-test">
+  <div class="ttop">
+    <div class="ttitle" id="ttitle"></div>
+    <div class="pwrap">
+      <div class="plbl"><span id="ptxt">Q 1</span><span id="ppct">0%</span></div>
+      <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    </div>
+    <div id="spwrap" style="display:none;"><div class="spill" id="spill"></div></div>
+    <button class="btn-bk" onclick="confirmBack()">&#8592; Tableau de bord</button>
+  </div>
+  <div class="tcont" id="tcont"></div>
+</div>
+
+<div id="screen-results">
+  <div class="rh">
+    <div class="rlbl" id="rlbl"></div>
+    <h2 id="rh2"></h2>
+    <div class="runame" id="runame"></div>
+    <div style="font-size:.7rem;color:rgba(247,244,239,.37);margin-top:4px;" id="rdt"></div>
+  </div>
+  <div class="rbody" id="rbody"></div>
+</div>
+
+<div id="screen-admin">
+  <div class="ah">
+    <div class="ah-title">&#9881; Administration RELIANCE&#174;</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <div class="atabs">
+        <button class="atab act" onclick="swAdm('clients',this)">Codes clients</button>
+        <button class="atab" onclick="swAdm('consultants',this)">Consultants</button>
+        <button class="atab" onclick="swAdm('resultats',this)">Résultats</button>
+      </div>
+      <button class="btn-out" onclick="doLogout()">Quitter</button>
+    </div>
+  </div>
+  <div class="abody">
+
+    <div class="apanel act" id="panel-clients">
+      <div class="asec">
+        <h3>Créer un code client</h3>
+        <div class="fr">
+          <div class="fg"><label class="fl">Nom client</label><input class="fi" id="nc-n" placeholder="Marie Dupont"></div>
+          <div class="fg"><label class="fl">Email client</label><input type="email" class="fi" id="nc-e" placeholder="client@email.com"></div>
+          <div class="fg"><label class="fl">Expiration</label><input type="date" class="fi" id="nc-exp"></div>
+        </div>
+        <div class="fr2">
+          <div class="fg"><label class="fl">Email consultant (reçoit les résultats)</label><input type="email" class="fi" id="nc-ce" placeholder="rodrigue@rpcoaching.fr"></div>
+          <div class="fg"><label class="fl">Code personnalisé (optionnel)</label><input class="fi" id="nc-cu" placeholder="Auto-généré si vide"></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div class="fl" style="margin-bottom:7px;">Tests accessibles</div>
+          <div class="ckrow">
+            <label class="cki"><input type="checkbox" id="ck-v" checked> &#127843; Boussole de Valeurs</label>
+            <label class="cki"><input type="checkbox" id="ck-o" checked> &#127919; Orientation Professionnelle</label>
+            <label class="cki"><input type="checkbox" id="ck-s" checked> &#10022; Signature Comportementale</label>
+          </div>
+        </div>
+        <button class="btn-cr" onclick="createClient()">+ Créer le code</button>
+      </div>
+      <div class="asec">
+        <h3>Codes existants</h3>
+        <table class="tbl"><thead><tr><th>Code</th><th>Client</th><th>Tests</th><th>Expiration</th><th>Créé par</th><th>Consentement</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="tbl-cl"></tbody></table>
+      </div>
+    <div style='margin-top:12px;'>
+      <button class='btn-cr' style='background:#074F6A;' onclick='exportConsentements()'>&#8595; Exporter les consentements (CSV)</button>
+    </div>
+    </div>
+
+    <div class="apanel" id="panel-consultants">
+      <div class="asec">
+        <h3>Créer un accès consultant</h3>
+        <p style="font-size:.81rem;color:var(--tl);margin-bottom:14px;">Le consultant reçoit un code <strong>CONS-XXXX-XXXX</strong>. Il accède à son espace, crée des codes pour ses clients et consulte leurs résultats. Il ne voit jamais les clients des autres.</p>
+        <div class="fr">
+          <div class="fg"><label class="fl">Nom consultant</label><input class="fi" id="nco-n" placeholder="Sophie Martin"></div>
+          <div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="nco-e" placeholder="sophie@reliance.fr"></div>
+          <div class="fg"><label class="fl">Expiration licence</label><input type="date" class="fi" id="nco-exp"></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div class="fl" style="margin-bottom:7px;">Tests qu'il peut déployer</div>
+          <div class="ckrow">
+            <label class="cki"><input type="checkbox" id="ck-cov" checked> &#127843; Boussole de Valeurs</label>
+            <label class="cki"><input type="checkbox" id="ck-coo" checked> &#127919; Orientation Professionnelle</label>
+            <label class="cki"><input type="checkbox" id="ck-cos" checked> &#10022; Signature Comportementale</label>
+          </div>
+        </div>
+        <button class="btn-cr" onclick="createConsultant()">+ Créer le compte consultant</button>
+      </div>
+      <div class="asec">
+        <h3>Consultants actifs</h3>
+        <table class="tbl"><thead><tr><th>Code</th><th>Consultant</th><th>Email</th><th>Tests</th><th>Expiration</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="tbl-co"></tbody></table>
+      </div>
+    </div>
+
+    <div class="apanel" id="panel-resultats">
+      <div class="asec">
+        <h3>Résultats reçus</h3>
+        <p style="font-size:.81rem;color:var(--tl);margin-bottom:14px;">Saisissez un code résultat reçu par email ou SMS, ou retrouvez ci-dessous tous les résultats enregistrés.</p>
+        <div style="display:flex;gap:9px;margin-bottom:20px;">
+          <input class="fi" id="res-lu" placeholder="Code résultat (ex: RES-ABC123)" style="flex:1;">
+          <button class="btn-cr" onclick="lookupRes()">Rechercher</button>
+        </div>
+        <div id="res-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="moverlay" id="m-resdet">
+  <div class="mbox">
+    <button class="mclose" onclick="closeM('m-resdet')">&#10005; Fermer</button>
+    <div id="m-rescont"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+// ── SUPABASE CONFIG ──
+var SB_URL='https://zjsgzspvrtliypckixkf.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpqc2d6c3B2cnRsaXlwY2tpeGtmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDcxMzIsImV4cCI6MjA5MTA4MzEzMn0.DeEgheyFeE3dM2GjGMFcQy63KoqcT7jHHt9SymqTb-4';
+var LOGO_URI='data:image/png;base64,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';
+
+async function sbFetch(path, options){
+  var url=SB_URL+'/rest/v1/'+path;
+  var headers={
+    'apikey':SB_KEY,
+    'Authorization':'Bearer '+SB_KEY,
+    'Content-Type':'application/json',
+    'Prefer':'return=representation',
+    'Accept':'application/json'
+  };
+  if(options&&options.headers) Object.assign(headers,options.headers);
+  var res=await fetch(url,Object.assign({},options,{headers:headers}));
+  if(!res.ok){var e=await res.text();console.error('SB error:',res.status,e);throw new Error(res.status+': '+e);}
+  var ct=res.headers.get('content-type')||'';
+  return ct.includes('json')?res.json():[];
+}
+
+async function sbGet(table, query){
+  return sbFetch(table+'?'+query, {method:'GET'});
+}
+async function sbPost(table, data){
+  return sbFetch(table, {method:'POST', body:JSON.stringify(data)});
+}
+async function sbPatch(table, query, data){
+  return sbFetch(table+'?'+query, {method:'PATCH', body:JSON.stringify(data)});
+}
+async function sbDelete(table, query){
+  return sbFetch(table+'?'+query, {method:'DELETE'});
+}
+
+var APW="System01370@";
+var CK="rlnc4_codes";
+var COK="rlnc4_cons";
+var RK="rlnc4_res";
+
+var TM={
+  "valeurs":{id:"valeurs",title:"Boussole de Valeurs RELIANCE®",sub:"Valeurs fondamentales",icon:"🧭",ic:"ico-v",desc:"Identifiez vos valeurs profondes qui guident vos décisions.",duree:"12 min",nb:"40 questions",skipable:false},
+  "orient":{id:"orient",title:"Orientation Professionnelle RELIANCE®",sub:"Codes RIASEC & métiers",icon:"🎯",ic:"ico-o",desc:"Découvrez vos orientations naturelles et vos environnements professionnels.",duree:"10 min",nb:"42 questions",skipable:true},
+  "signat":{id:"signat",title:"Signature Comportementale RELIANCE®",sub:"Profil de personnalité",icon:"✶",ic:"ico-s",desc:"Explorez votre manière naturelle de percevoir et d'interagir.",duree:"15 min",nb:"30 questions",skipable:true},
+};
+
+var VM={
+  "A":{l:"Autonomie",d:"Indépendance de pensée et d'action, curiosité, créativité"},
+  "S":{l:"Stimulation",d:"Enthousiasme, goût du défi, besoin de nouveauté"},
+  "H":{l:"Hédonisme",d:"Plaisir, bien-être, qualité de vie"},
+  "R":{l:"Réussite",d:"Accomplissement, compétence reconnue, ambition"},
+  "P":{l:"Pouvoir",d:"Influence, leadership, statut social"},
+  "SE":{l:"Sécurité",d:"Stabilité, protection, prévisibilité"},
+  "C":{l:"Conformité",d:"Respect des règles, autodiscipline, cohésion"},
+  "T":{l:"Tradition",d:"Attachement aux racines, modération, continuité"},
+  "B":{l:"Bienveillance",d:"Loyauté, entraide, responsabilité envers les proches"},
+  "U":{l:"Universalisme",d:"Justice sociale, ouverture, protection du vivant"},
+};
+
+var OM={
+  "R":{l:"Réaliste",e:"🔧",d:"Concret, manuel, technique — vous aimez voir et toucher le résultat de votre travail."},
+  "I":{l:"Investigateur",e:"🔬",d:"Analytique, curieux, rigoureux — vous aimez comprendre en profondeur."},
+  "Ar":{l:"Artistique",e:"🎨",d:"Créatif, expressif, intuitif — vous avez besoin d'originalité et de liberté."},
+  "So":{l:"Social",e:"🤝",d:"Empathique, communicant, altruiste — vous vous épanouissez dans la relation."},
+  "E":{l:"Entrepreneur",e:"🚀",d:"Leader, persuasif, ambitieux — vous aimez convaincre, décider et avoir de l'impact."},
+  "C":{l:"Conventionnel",e:"📋",d:"Organisé, rigoureux, fiable — vous appréciez l'ordre, les procédures et la précision."},
+};
+
+var METIERS={
+  "RIA":[{label:"Ingénieur d'études techniques",search:"ingénieur études"},{label:"Technicien de maintenance",search:"technicien maintenance"},{label:"Dessinateur projeteur",search:"dessinateur projeteur"}],
+  "RIC":[{label:"Technicien en métrologie",search:"technicien métrologie"},{label:"Contrôleur qualité industriel",search:"contrôleur qualité"},{label:"Technicien de laboratoire",search:"technicien laboratoire"}],
+  "RIE":[{label:"Technicien bureau d'études",search:"technicien bureau études"},{label:"Chargé d'affaires techniques",search:"chargé affaires"},{label:"Responsable technique",search:"responsable technique"}],
+  "RIS":[{label:"Technicien agricole",search:"technicien agricole"},{label:"Agent de terrain environnement",search:"agent terrain environnement"},{label:"Conducteur d'engins",search:"conducteur engins"}],
+  "RIAr":[{label:"Dessinateur industriel",search:"dessinateur industriel"},{label:"Concepteur produit",search:"concepteur produit"},{label:"Maquettiste industriel",search:"maquettiste"}],
+  "RE":[{label:"Chef de chantier",search:"chef chantier"},{label:"Responsable logistique",search:"responsable logistique"},{label:"Directeur technique",search:"directeur technique"}],
+  "RC":[{label:"Agent logistique",search:"agent logistique"},{label:"Technicien de maintenance bâtiment",search:"technicien maintenance bâtiment"},{label:"Gestionnaire de stocks",search:"gestionnaire stocks"}],
+  "IRA":[{label:"Ingénieur R&D",search:"ingénieur recherche développement"},{label:"Consultant technique",search:"consultant technique"},{label:"Formateur technique",search:"formateur technique"}],
+  "IRC":[{label:"Analyste systèmes d'information",search:"analyste systèmes information"},{label:"Contrôleur de gestion",search:"contrôleur gestion"},{label:"Auditeur technique",search:"auditeur"}],
+  "IRE":[{label:"Consultant en organisation",search:"consultant organisation"},{label:"Chargé d'études",search:"chargé études"},{label:"Directeur de projet",search:"directeur projet"}],
+  "IRS":[{label:"Chercheur en sciences",search:"chercheur sciences"},{label:"Ingénieur agronome",search:"ingénieur agronome"},{label:"Technicien R&D",search:"technicien recherche développement"}],
+  "IAR":[{label:"Formateur",search:"formateur"},{label:"Rédacteur technique",search:"rédacteur technique"},{label:"Journaliste scientifique",search:"journaliste"}],
+  "IAS":[{label:"Enseignant chercheur",search:"enseignant chercheur"},{label:"Psychologue",search:"psychologue"},{label:"Médecin",search:"médecin"}],
+  "IAE":[{label:"Consultant RH",search:"consultant ressources humaines"},{label:"Chargé d'études marketing",search:"chargé études marketing"},{label:"Chef de projet",search:"chef projet"}],
+  "IAC":[{label:"Auditeur",search:"auditeur"},{label:"Analyste financier",search:"analyste financier"},{label:"Contrôleur de gestion",search:"contrôleur gestion"}],
+  "IEA":[{label:"Directeur de cabinet conseil",search:"directeur conseil"},{label:"Consultant en stratégie",search:"consultant stratégie"},{label:"Responsable formation",search:"responsable formation"}],
+  "IEC":[{label:"Analyste financier",search:"analyste financier"},{label:"Directeur financier",search:"directeur financier"},{label:"Commissaire aux comptes",search:"commissaire comptes"}],
+  "IES":[{label:"Enseignant",search:"enseignant"},{label:"Chargé de veille",search:"chargé veille"},{label:"Consultant RH",search:"consultant ressources humaines"}],
+  "ISA":[{label:"Psychologue clinicien",search:"psychologue"},{label:"Formateur professionnel",search:"formateur"},{label:"Médiateur",search:"médiateur"}],
+  "ISE":[{label:"Conseiller en insertion",search:"conseiller insertion professionnelle"},{label:"Formateur",search:"formateur"},{label:"Chargé de recrutement",search:"chargé recrutement"}],
+  "ISC":[{label:"Assistant RH",search:"assistant ressources humaines"},{label:"Gestionnaire formation",search:"gestionnaire formation"},{label:"Secrétaire médical",search:"secrétaire médical"}],
+  "ArIA":[{label:"Graphiste",search:"graphiste"},{label:"Animateur multimédia",search:"animateur multimédia"},{label:"Journaliste",search:"journaliste"}],
+  "ArIS":[{label:"Designer graphique",search:"designer graphique"},{label:"Réalisateur",search:"réalisateur"},{label:"Photographe",search:"photographe"}],
+  "ArIE":[{label:"Directeur artistique",search:"directeur artistique"},{label:"Concepteur rédacteur",search:"concepteur rédacteur"},{label:"Chef de projet digital",search:"chef projet digital"}],
+  "ArSE":[{label:"Chargé de communication",search:"chargé communication"},{label:"Animateur culturel",search:"animateur culturel"},{label:"Comédien",search:"comédien"}],
+  "ArSI":[{label:"Professeur d'arts",search:"professeur arts"},{label:"Animateur",search:"animateur"},{label:"Illustrateur",search:"illustrateur"}],
+  "ArEI":[{label:"Directeur de création",search:"directeur création"},{label:"Chef de publicité",search:"chef publicité"},{label:"Consultant communication",search:"consultant communication"}],
+  "ArES":[{label:"Responsable communication",search:"responsable communication"},{label:"Attaché de presse",search:"attaché presse"},{label:"Chargé de marketing",search:"chargé marketing"}],
+  "ArEC":[{label:"Chargé de communication corporate",search:"chargé communication"},{label:"Designer",search:"designer"},{label:"Responsable marketing",search:"responsable marketing"}],
+  "SoAI":[{label:"Psychologue",search:"psychologue"},{label:"Thérapeute",search:"thérapeute"},{label:"Educateur spécialisé",search:"éducateur spécialisé"}],
+  "SoAE":[{label:"Consultant RH",search:"consultant ressources humaines"},{label:"Responsable formation",search:"responsable formation"},{label:"Coach professionnel",search:"coach"}],
+  "SoAR":[{label:"Aide à domicile",search:"aide domicile"},{label:"Travailleur social",search:"travailleur social"},{label:"Auxiliaire de vie",search:"auxiliaire vie"}],
+  "SoIA":[{label:"Psychologue",search:"psychologue"},{label:"Chercheur en sciences humaines",search:"chercheur sciences humaines"},{label:"Médecin",search:"médecin"}],
+  "SoIE":[{label:"Consultant en bilan de compétences",search:"bilan compétences"},{label:"Responsable RH",search:"responsable ressources humaines"},{label:"Formateur",search:"formateur"}],
+  "SoEA":[{label:"Chargé de recrutement",search:"chargé recrutement"},{label:"Responsable RH",search:"responsable ressources humaines"},{label:"Conseiller emploi",search:"conseiller emploi"}],
+  "SoEI":[{label:"Consultant en recrutement",search:"consultant recrutement"},{label:"Directeur RH",search:"directeur ressources humaines"},{label:"Coach",search:"coach"}],
+  "SoEC":[{label:"Commercial RH",search:"commercial ressources humaines"},{label:"Responsable recrutement",search:"responsable recrutement"},{label:"Conseiller emploi",search:"conseiller emploi"}],
+  "EAS":[{label:"Directeur commercial",search:"directeur commercial"},{label:"Responsable marketing",search:"responsable marketing"},{label:"Chef de projet",search:"chef projet"}],
+  "EAI":[{label:"Directeur de cabinet",search:"directeur cabinet"},{label:"Consultant stratégie",search:"consultant stratégie"},{label:"Directeur formation",search:"directeur formation"}],
+  "EAR":[{label:"Directeur commercial",search:"directeur commercial"},{label:"Directeur d'exploitation",search:"directeur exploitation"},{label:"Manager d'équipe",search:"manager"}],
+  "EAC":[{label:"Directeur financier",search:"directeur financier"},{label:"Directeur général",search:"directeur général"},{label:"Consultant",search:"consultant"}],
+  "EIA":[{label:"Directeur de projet",search:"directeur projet"},{label:"Consultant en management",search:"consultant management"},{label:"Formateur management",search:"formateur management"}],
+  "EIC":[{label:"Directeur financier",search:"directeur financier"},{label:"Auditeur",search:"auditeur"},{label:"Contrôleur de gestion",search:"contrôleur gestion"}],
+  "EIR":[{label:"Directeur technique",search:"directeur technique"},{label:"Responsable bureau d'études",search:"responsable bureau études"},{label:"Consultant",search:"consultant"}],
+  "ESA":[{label:"Directeur de cabinet conseil",search:"directeur conseil"},{label:"Responsable recrutement",search:"responsable recrutement"},{label:"Commercial",search:"commercial"}],
+  "ESI":[{label:"Directeur de cabinet",search:"directeur cabinet"},{label:"Chef de projet RH",search:"chef projet ressources humaines"},{label:"Formateur",search:"formateur"}],
+  "ESC":[{label:"Commercial",search:"commercial"},{label:"Responsable RH",search:"responsable ressources humaines"},{label:"Chargé de recrutement",search:"chargé recrutement"}],
+  "ECA":[{label:"Directeur financier",search:"directeur financier"},{label:"Consultant",search:"consultant"},{label:"Responsable marketing",search:"responsable marketing"}],
+  "ECI":[{label:"Directeur financier",search:"directeur financier"},{label:"Auditeur",search:"auditeur"},{label:"Directeur général",search:"directeur général"}],
+  "CES":[{label:"Comptable",search:"comptable"},{label:"Contrôleur de gestion",search:"contrôleur gestion"},{label:"Secrétaire de direction",search:"secrétaire direction"}],
+  "CEI":[{label:"Analyste financier",search:"analyste financier"},{label:"Contrôleur de gestion",search:"contrôleur gestion"},{label:"Auditeur",search:"auditeur"}],
+  "CEA":[{label:"Consultant",search:"consultant"},{label:"Comptable",search:"comptable"},{label:"Chargé de marketing",search:"chargé marketing"}],
+  "CSE":[{label:"Assistant RH",search:"assistant ressources humaines"},{label:"Secrétaire de direction",search:"secrétaire direction"},{label:"Gestionnaire paie",search:"gestionnaire paie"}],
+  "CSA":[{label:"Gestionnaire RH",search:"gestionnaire ressources humaines"},{label:"Secrétaire",search:"secrétaire"},{label:"Formateur",search:"formateur"}],
+  "CSI":[{label:"Secrétaire",search:"secrétaire"},{label:"Assistant administratif",search:"assistant administratif"},{label:"Gestionnaire",search:"gestionnaire"}],
+  "CIE":[{label:"Analyste systèmes d'information",search:"analyste systèmes information"},{label:"Analyste financier",search:"analyste financier"},{label:"Consultant",search:"consultant"}],
+  "CIA":[{label:"Responsable systèmes d'information",search:"responsable systèmes information"},{label:"Consultant",search:"consultant"},{label:"Formateur informatique",search:"formateur informatique"}],
+  "def":[{label:"Conseiller en évolution professionnelle",search:"conseiller évolution professionnelle"},{label:"Formateur",search:"formateur"},{label:"Consultant RH",search:"consultant ressources humaines"}],
+};
+var FT_BASE="https://candidat.francetravail.fr/offres/recherche?motsCles=";
+
+var MBTI={
+  "INTJ":{n:"L'Architecte",d:"Stratège visionnaire et indépendant, vous combinez imagination et détermination pour concrétiser vos ambitions les plus exigeantes."},
+  "INTP":{n:"Le Logicien",d:"Penseur innovant assoiffé de connaissance, vous analysez tout en profondeur. Votre logique affutée fait de vous un résolveur de problèmes hors pair."},
+  "ENTJ":{n:"Le Commandant",d:"Leader né, vous incarnez la détermination et la vision stratégique. Votre charisme vous permet d'atteindre des objectifs ambitieux."},
+  "ENTP":{n:"Le Débatteur",d:"Esprit vif et inventif, vous questionnez les certitudes et explorez les idées sous tous les angles."},
+  "INFJ":{n:"L'Idéaliste",d:"Porteur d'une vision claire du futur, vous combinez intuition profonde et engagement humain fort."},
+  "INFP":{n:"Le Médiateur",d:"Animé(e) par des valeurs profondes, vous cherchez à donner du sens à tout ce que vous faites."},
+  "ENFJ":{n:"Le Protagoniste",d:"Charismatique et inspirant(e), vous avez un talent naturel pour aider les autres à réaliser leur potentiel."},
+  "ENFP":{n:"Le Catalyseur",d:"Esprit libre et enthousiaste, vous voyez le potentiel partout. Votre énergie transforme les obstacles en opportunités."},
+  "ISTJ":{n:"Le Logisticien",d:"Fiable, méthodique et engagé(e), vous incarnez le sens du devoir. Votre rigueur fait de vous un pilier solide."},
+  "ISFJ":{n:"Le Gardien",d:"Protecteur(trice) attentionné(e) et dévoué(e), vous mettez votre énergie au service des autres."},
+  "ESTJ":{n:"Le Directeur",d:"Organisateur(trice) né(e), vous mettez de l'ordre et faites avancer les choses efficacement."},
+  "ESFJ":{n:"Le Consul",d:"Attentionné(e) et sociable, vous créez l'harmonie et prenez soin des autres naturellement."},
+  "ISTP":{n:"Le Virtuose",d:"Artisan(e) pragmatique et curieux(se), vous improvisez des solutions élégantes aux problèmes concrets."},
+  "ISFP":{n:"L'Explorateur",d:"Sensible et spontané(e), vous vivez dans le présent et cherchez à exprimer qui vous êtes."},
+  "ESTP":{n:"L'Entrepreneur",d:"Énergique et perceptif(ve), vous êtes dans l'action et aimez relever des défis concrets."},
+  "ESFP":{n:"L'Animateur",d:"Spontané(e), énergique et enthousiaste, vous rendez la vie plus agréable autour de vous."},
+};
+
+
+var VQ=[
+  {id:1,d:"A",t:"Vous reconnaissez-vous dans cette personne : elle organise son travail à sa façon, sans attendre qu'on lui indique quoi faire.",c:"Elle valorise la liberté de choisir sa propre manière d'avancer."},
+  {id:2,d:"A",t:"Ce profil vous correspond-il : elle explore toujours des approches nouvelles, même quand les méthodes habituelles fonctionnent bien.",c:"La curiosité intellectuelle et le goût de l'expérimentation font partie de son quotidien."},
+  {id:3,d:"A",t:"Vous reconnaissez-vous dans cette description : exprimer des idées originales est pour elle une source profonde de satisfaction.",c:"Elle a besoin de créer, d'inventer, de laisser sa marque."},
+  {id:4,d:"A",t:"Ce comportement vous ressemble-t-il : elle définit ses propres objectifs plutôt que de suivre ceux qu'on lui impose.",c:"L'autodétermination est au coeur de sa motivation."},
+  {id:5,d:"S",t:"Vous reconnaissez-vous dans ce profil : elle s'épanouit dans les situations imprévues qui demandent des solutions créatives.",c:"Elle trouve l'imprévisible stimulant plutôt qu'anxiogène."},
+  {id:6,d:"S",t:"Ce trait vous correspond-il : elle recherche activement les changements de rythme et les nouvelles expériences dans sa vie professionnelle.",c:"La variété est pour elle une source d'énergie."},
+  {id:7,d:"S",t:"Vous reconnaissez-vous dans cette personne : elle est attirée par les projets ambitieux et légèrement risqués plutôt que par les tâches routinières.",c:"Elle préfère l'adrénaline du défi au confort de la répétition."},
+  {id:8,d:"S",t:"Ce besoin vous parle-t-il : elle a besoin de sentir que sa vie professionnelle est dynamique et en constante évolution.",c:"La stagnation lui pèse rapidement."},
+  {id:9,d:"H",t:"Vous reconnaissez-vous dans cette attitude : elle s'accorde des moments de plaisir et de satisfaction, considérant cela essentiel.",c:"Elle ne sacrifie pas son bien-être au profit de la seule performance."},
+  {id:10,d:"H",t:"Ce comportement vous ressemble-t-il : elle cherche à trouver du plaisir dans ses activités quotidiennes, même les plus ordinaires.",c:"Profiter de l'instant présent est une valeur importante pour elle."},
+  {id:11,d:"H",t:"Vous reconnaissez-vous dans cette priorité : une bonne qualité de vie au travail compte autant pour elle que les résultats obtenus.",c:"L'environnement et l'ambiance influencent fortement son engagement."},
+  {id:12,d:"H",t:"Ce trait vous correspond-il : elle pense qu'il est important de se faire plaisir et de savourer ce que la vie lui offre.",c:"Elle n'attend pas toujours à plus tard pour apprécier le présent."},
+  {id:13,d:"R",t:"Vous reconnaissez-vous dans cette personne : elle tient à démontrer ses compétences et à être reconnue pour ses réalisations.",c:"La validation de son expertise par les autres est une source de motivation forte."},
+  {id:14,d:"R",t:"Ce moteur vous parle-t-il : elle est animée par l'ambition d'atteindre des objectifs élevés et de progresser continuellement.",c:"Elle se fixe des standards exigeants et s'efforce de les dépasser."},
+  {id:15,d:"R",t:"Vous reconnaissez-vous dans cette identité professionnelle : réussir dans son domaine et être perçue comme compétente est fondamental pour elle.",c:"La performance est au coeur de qui elle est."},
+  {id:16,d:"R",t:"Ce type de satisfaction vous correspond-il : elle aime se mesurer à des défis difficiles et ressentir la satisfaction d'avoir réussi.",c:"L'accomplissement lui procure un sentiment fort de valeur personnelle."},
+  {id:17,d:"P",t:"Vous reconnaissez-vous dans ce profil : elle est à l'aise dans les positions où elle peut influencer les décisions et orienter les choix collectifs.",c:"Le leadership naturel fait partie de sa façon d'être."},
+  {id:18,d:"P",t:"Cette valeur vous parle-t-elle : elle accorde de l'importance au statut social et à la reconnaissance de son autorité dans son domaine.",c:"Être reconnue comme une référence a de la valeur pour elle."},
+  {id:19,d:"P",t:"Vous reconnaissez-vous dans cette aspiration : elle cherche à développer son influence et à avoir un impact sur son entourage professionnel.",c:"Avoir du poids dans les décisions lui importe."},
+  {id:20,d:"P",t:"Ce besoin vous correspond-il : occuper une position de responsabilité et diriger des équipes est une aspiration naturelle pour elle.",c:"Le pouvoir d'agir sur les choses la motive en profondeur."},
+  {id:21,d:"SE",t:"Vous reconnaissez-vous dans ce besoin : elle a besoin de stabilité et de prévisibilité dans sa vie professionnelle pour fonctionner au mieux.",c:"L'incertitude prolongée lui coûte de l'énergie."},
+  {id:22,d:"SE",t:"Cette priorité vous correspond-elle : elle veille à protéger la sécurité et le bien-être des personnes qui lui sont proches.",c:"Préserver les siens est une priorité profonde."},
+  {id:23,d:"SE",t:"Vous reconnaissez-vous dans cette préférence : elle apprécie les environnements organisés, avec des règles claires et des processus stables.",c:"La structure lui permet d'être pleinement efficace."},
+  {id:24,d:"SE",t:"Ce comportement vous parle-t-il : anticiper les risques et construire des situations stables est sa façon naturelle d'agir.",c:"Elle préfère la prévoyance à l'improvisation."},
+  {id:25,d:"C",t:"Vous reconnaissez-vous dans cette posture : elle respecte les règles et les normes en vigueur, même quand cela lui demande des efforts.",c:"Elle considère que le cadre collectif mérite d'être respecté."},
+  {id:26,d:"C",t:"Ce souci vous correspond-il : elle fait attention à ne pas perturber le fonctionnement du groupe par des comportements impulsifs.",c:"La cohésion collective passe avant ses envies du moment."},
+  {id:27,d:"C",t:"Vous reconnaissez-vous dans cette valeur : s'intégrer harmonieusement dans un collectif lui tient vraiment à coeur.",c:"Elle adapte son comportement aux attentes de son environnement professionnel."},
+  {id:28,d:"C",t:"Ce principe vous parle-t-il : la discipline personnelle et le respect des engagements sont pour elle des valeurs non négociables.",c:"Tenir sa parole est fondamental."},
+  {id:29,d:"T",t:"Vous reconnaissez-vous dans cet attachement : elle accorde une valeur profonde aux pratiques et traditions qui ont fait leurs preuves.",c:"Elle respecte ce qui a été transmis et ne rejette pas facilement le passé."},
+  {id:30,d:"T",t:"Ce lien vous correspond-il : elle est attachée à ses racines culturelles, familiales ou professionnelles.",c:"Son histoire et ses appartenances font partie de son identité."},
+  {id:31,d:"T",t:"Vous reconnaissez-vous dans cette sagesse : elle préfère les évolutions progressives aux changements radicaux qui remettent tout en question.",c:"La continuité est pour elle une forme de prudence bienveillante."},
+  {id:32,d:"T",t:"Ces qualités vous parlent-elles : la modération et l'humilité font partie de sa façon de vivre et de travailler.",c:"Elle n'a pas besoin d'être sous les projecteurs pour se sentir accomplie."},
+  {id:33,d:"B",t:"Vous reconnaissez-vous dans ce moteur : elle trouve un sens profond à aider les personnes de son entourage quotidien.",c:"Elle est naturellement attentive aux besoins de ceux qu'elle côtoie."},
+  {id:34,d:"B",t:"Cette valeur vous correspond-elle : la loyauté et l'honnêteté dans ses relations sont fondamentales pour elle.",c:"La confiance est pour elle le fondement de tout lien solide."},
+  {id:35,d:"B",t:"Vous reconnaissez-vous dans ce sens des responsabilités : elle se sent profondément responsable des personnes dont elle a la charge.",c:"Prendre soin des autres fait naturellement partie de qui elle est."},
+  {id:36,d:"B",t:"Cette posture vous parle-t-elle : le pardon et la bienveillance dans les relations comptent plus pour elle qu'avoir raison.",c:"Elle préfère préserver les liens plutôt que gagner les conflits."},
+  {id:37,d:"U",t:"Vous reconnaissez-vous dans cette sensibilité : les injustices sociales l'interpellent et elle ressent le besoin d'y contribuer à son niveau.",c:"L'équité et la justice sont des valeurs qui l'animent profondément."},
+  {id:38,d:"U",t:"Cette préoccupation vous correspond-elle : elle intègre une réflexion sur l'impact environnemental dans ses choix professionnels et personnels.",c:"La préservation du vivant fait partie de ses priorités."},
+  {id:39,d:"U",t:"Vous reconnaissez-vous dans cette vision : elle aspire à contribuer à un monde plus juste et plus inclusif, au-delà de son cercle proche.",c:"Une vision large du bien commun guide ses actions."},
+  {id:40,d:"U",t:"Ce trait vous parle-t-il : la sagesse et la compréhension des différentes cultures sont pour elle des richesses à cultiver.",c:"L'ouverture à l'autre est une valeur centrale dans sa façon d'être."},
+];
+
+var OQ=[
+  {id:1,d:"R",t:"Vous reconnaissez-vous dans ce profil : travailler avec ses mains, des outils ou des machines est plus naturel que de travailler sur des concepts.",o:["Oui, c'est mon mode naturel","Peu ou pas du tout"]},
+  {id:2,d:"R",t:"Ce comportement vous correspond-il : voir un résultat concret et visible à la fin d'une tâche vous procure une vraie satisfaction.",o:["Oui, c'est essentiel pour moi","Non, peu important"]},
+  {id:3,d:"R",t:"Vous reconnaissez-vous dans cette satisfaction : réparer, construire ou assembler des choses vous apporte un plaisir authentique.",o:["Oui, j'aime ça","Non, ce n'est pas mon monde"]},
+  {id:4,d:"R",t:"Ce cadre de travail vous correspond-il : vous êtes à l'aise dans des environnements physiques comme un atelier, un chantier ou le terrain.",o:["Tout à fait","Non, je préfère un bureau"]},
+  {id:5,d:"R",t:"Cette préférence vous parle-t-elle : des instructions précises et des tâches bien définies vous conviennent mieux que des situations ouvertes.",o:["Oui, je préfère la clarté","Non, j'aime l'ouverture"]},
+  {id:6,d:"R",t:"Vous reconnaissez-vous dans cet apprentissage : vous apprenez mieux en faisant qu'en lisant ou écoutant.",o:["Oui, je suis quelqu'un de pratique","Non, j'apprends autrement"]},
+  {id:7,d:"R",t:"Ces intérêts vous correspondent-ils : les activités sportives, artisanales ou techniques vous attirent naturellement.",o:["Oui, j'y suis attiré(e)","Non, peu d'attrait pour moi"]},
+  {id:8,d:"I",t:"Vous reconnaissez-vous dans cette approche : analyser en profondeur un problème avant de proposer une solution est votre façon naturelle de travailler.",o:["Oui, j'analyse toujours avant d'agir","Non, je préfère aller vite à l'action"]},
+  {id:9,d:"I",t:"Ce moteur vous parle-t-il : les questions complexes qui demandent de la réflexion vous attirent davantage que les tâches répétitives.",o:["Oui, c'est ce qui m'anime","Non, je préfère quelque chose de plus concret"]},
+  {id:10,d:"I",t:"Vous reconnaissez-vous dans cette curiosité : comprendre le pourquoi des choses est un besoin que vous ressentez régulièrement.",o:["Oui, je suis naturellement curieux(se)","Non, je m'intéresse surtout au comment"]},
+  {id:11,d:"I",t:"Ce comportement vous correspond-il : vous lisez, vous documentez et approfondissez vos connaissances de façon régulière.",o:["Oui, c'est une habitude","Non, j'apprends surtout sur le terrain"]},
+  {id:12,d:"I",t:"Cette façon de travailler vous parle-t-elle : vous préférez analyser un problème seul(e) plutôt que de chercher d'abord le consensus.",o:["Oui, j'aime travailler de manière autonome","Non, je préfère la concertation"]},
+  {id:13,d:"I",t:"Ces domaines vous correspondent-ils : les sujets scientifiques, technologiques ou analytiques vous passionnent.",o:["Oui, j'y suis attiré(e)","Non, d'autres domaines me parlent plus"]},
+  {id:14,d:"I",t:"Vous reconnaissez-vous dans cette démarche : formuler des hypothèses et les tester par l'analyse vous procure du plaisir.",o:["Oui, j'aime expérimenter et vérifier","Non, ce n'est pas ma façon de fonctionner"]},
+  {id:15,d:"Ar",t:"Vous reconnaissez-vous dans ce besoin : s'exprimer de manière créative dans votre travail est pour vous une nécessité.",o:["Oui, la créativité est centrale pour moi","Non, ce n'est pas indispensable"]},
+  {id:16,d:"Ar",t:"Ce ressenti vous correspond-il : les environnements trop structurés et rigides vous étouffent rapidement.",o:["Oui, j'ai besoin de liberté","Non, je m'adapte bien à la structure"]},
+  {id:17,d:"Ar",t:"Vous reconnaissez-vous dans cette sensibilité : l'esthétique, les formes, les couleurs ou les sons occupent une place dans votre quotidien.",o:["Oui, j'y suis sensible","Non, peu d'importance pour moi"]},
+  {id:18,d:"Ar",t:"Ce profil vous parle-t-il : inventer, imaginer et créer des choses originales vous attire davantage que suivre des procédures établies.",o:["Oui, j'aime l'originalité","Non, je préfère m'appuyer sur ce qui existe"]},
+  {id:19,d:"Ar",t:"Vous reconnaissez-vous dans ces centres d'intérêt : les arts, la communication visuelle, l'écriture ou la musique font partie de votre univers.",o:["Oui, ce sont des domaines qui me touchent","Non, peu d'intérêt"]},
+  {id:20,d:"Ar",t:"Cette aisance vous correspond-elle : vous vous sentez à l'aise dans l'ambiguïté et les situations sans réponse unique.",o:["Oui, cela ne me dérange pas","Non, je préfère les situations claires"]},
+  {id:21,d:"Ar",t:"Vous reconnaissez-vous dans cet atout : votre imagination et votre intuition sont des ressources que vous mobilisez souvent dans votre travail.",o:["Oui, ce sont mes forces","Non, je m'appuie plutôt sur la logique"]},
+  {id:22,d:"So",t:"Vous reconnaissez-vous dans ce moteur : aider et accompagner les autres dans leurs difficultés est ce qui vous motive le plus.",o:["Oui, c'est ma raison d'être","Non, ce n'est pas mon principal moteur"]},
+  {id:23,d:"So",t:"Ce contexte vous correspond-il : vous vous sentez pleinement dans votre élément quand vous travaillez en équipe ou en contact avec le public.",o:["Oui, j'ai besoin du contact humain","Non, je préfère travailler de façon plus indépendante"]},
+  {id:24,d:"So",t:"Vous reconnaissez-vous dans ces compétences : l'écoute, l'empathie et la communication sont des ressources que vous mobilisez naturellement.",o:["Oui, ce sont mes points forts","Non, je préfère d'autres approches"]},
+  {id:25,d:"So",t:"Ce rôle vous parle-t-il : enseigner, former et transmettre des savoirs ou des savoir-faire est une activité qui vous plaît.",o:["Oui, j'aime transmettre","Non, peu attirant pour moi"]},
+  {id:26,d:"So",t:"Vous reconnaissez-vous dans cet attrait : les domaines social, éducatif ou de soin vous attirent par leur dimension humaine.",o:["Oui, la dimension humaine est centrale","Non, d'autres aspects me motivent plus"]},
+  {id:27,d:"So",t:"Ce trait vous correspond-il : vous êtes naturellement attentif(ve) aux besoins des autres et cherchez à y répondre.",o:["Oui, c'est instinctif","Non, je dois faire un effort"]},
+  {id:28,d:"So",t:"Vous reconnaissez-vous dans cette compétence : résoudre des conflits, faciliter la communication et créer du lien est quelque chose que vous faites bien.",o:["Oui, c'est une force naturelle","Non, ce n'est pas mon registre"]},
+  {id:29,d:"E",t:"Vous reconnaissez-vous dans ce rôle : vous vous voyez facilement en position de leader, à convaincre et mobiliser les autres.",o:["Oui, c'est naturel pour moi","Non, je préfère un rôle différent"]},
+  {id:30,d:"E",t:"Ce rapport au risque vous correspond-il : une prise de risque calculée vous stimule plutôt qu'elle ne vous inquiète.",o:["Oui, j'aime le risque maîtrisé","Non, je préfère minimiser l'incertitude"]},
+  {id:31,d:"E",t:"Vous reconnaissez-vous dans ce plaisir : négocier, vendre et convaincre vous procurent de la satisfaction.",o:["Oui, j'aime convaincre","Non, ce n'est pas mon fort"]},
+  {id:32,d:"E",t:"Ce type d'aspiration vous parle-t-il : lancer des projets, des initiatives ou des entreprises fait partie de vos envies naturelles.",o:["Oui, j'ai l'âme entrepreneuriale","Non, je préfère contribuer à un projet existant"]},
+  {id:33,d:"E",t:"Vous reconnaissez-vous dans ce besoin : avoir de l'influence et un impact dans votre environnement est important pour vous.",o:["Oui, c'est fondamental","Non, peu important"]},
+  {id:34,d:"E",t:"Ces domaines vous correspondent-ils : la stratégie, le business et la croissance vous intéressent profondément.",o:["Oui, je suis attiré(e) par ces enjeux","Non, d'autres sujets m'intéressent davantage"]},
+  {id:35,d:"E",t:"Vous reconnaissez-vous dans cette aisance : prendre des décisions, même dans l'incertitude, vous convient.",o:["Oui, je décide avec assurance","Non, j'ai besoin de plus d'informations avant"]},
+  {id:36,d:"C",t:"Vous reconnaissez-vous dans cette efficacité : vous fonctionnez bien dans les environnements structurés avec des procédures claires.",o:["Oui, la structure m'aide","Non, trop de structure me bride"]},
+  {id:37,d:"C",t:"Ce profil vous correspond-il : organiser, classer et gérer des données en faisant attention aux détails vous convient.",o:["Oui, j'aime l'ordre et la précision","Non, ce n'est pas ma façon de travailler"]},
+  {id:38,d:"C",t:"Vous reconnaissez-vous dans cette aisance : la gestion administrative, comptable ou logistique ne vous dérange pas, vous y trouvez même du plaisir.",o:["Oui, j'y suis à l'aise","Non, peu d'attrait pour ces tâches"]},
+  {id:39,d:"C",t:"Ce besoin vous parle-t-il : un cadre de travail stable et bien défini vous convient mieux que des situations changeantes.",o:["Oui, je préfère la stabilité","Non, j'aime le changement"]},
+  {id:40,d:"C",t:"Vous reconnaissez-vous dans ce rapport aux règles : les respecter et veiller à ce que les choses soient en ordre est important pour vous.",o:["Oui, c'est une valeur","Non, je suis plus flexible"]},
+  {id:41,d:"C",t:"Ces qualités vous correspondent-elles : la précision, la fiabilité et la rigueur sont des atouts que vous cultivez.",o:["Oui, ce sont mes points forts","Non, je suis plus dans l'improvisation"]},
+  {id:42,d:"C",t:"Vous reconnaissez-vous dans ces rôles : appui, coordination ou support organisationnel sont des fonctions qui vous conviennent.",o:["Oui, j'aime ces rôles","Non, je préfère un rôle différent"]},
+];
+
+var SQ=[
+  {id:1,d:"EI",t:"Vous reconnaissez-vous dans ce mode de ressourcement : après une journée intense avec beaucoup d'interactions, être seul(e) dans un endroit calme vous régénère.",o:["Non, je préfère repartir avec des amis ou en groupe","Oui, j'ai besoin de solitude pour récupérer"]},
+  {id:2,d:"EI",t:"Ce comportement vous correspond-il : dans une réunion avec des inconnus, vous prenez la parole facilement et partagez vos idées naturellement.",o:["Oui, je parle facilement","Non, j'observe d'abord et interviens avec parcimonie"]},
+  {id:3,d:"EI",t:"Vous reconnaissez-vous dans cette source d'énergie : les échanges, le collectif et l'animation vous rechargent.",o:["Oui, les autres m'énergisent","Non, je me ressource plutôt dans le calme"]},
+  {id:4,d:"EI",t:"Ce réflexe vous parle-t-il : face à un problème, vous aimez en parler avec quelqu'un pour y voir plus clair avant de réfléchir seul(e).",o:["Oui, je verbalise pour penser","Non, je réfléchis d'abord en solo"]},
+  {id:5,d:"EI",t:"Vous reconnaissez-vous dans cette description : les autres vous perçoivent comme communicant(e), ouvert(e) et expressif(ve).",o:["Oui, c'est l'image que je donne","Non, je suis plutôt réservé(e) et sélectif(ve)"]},
+  {id:6,d:"EI",t:"Ce ressenti vous correspond-il : lors d'un événement réseau ou social, vous vous y sentez à l'aise et y trouvez de l'énergie.",o:["Oui, j'aime ces moments","Non, cela me demande un effort et je dois récupérer après"]},
+  {id:7,d:"SN",t:"Vous reconnaissez-vous dans cette façon d'apprendre : les exemples concrets, les cas pratiques et les situations tangibles vous parlent mieux que les concepts abstraits.",o:["Oui, je suis ancré(e) dans le concret","Non, je pars plutôt des principes et concepts"]},
+  {id:8,d:"SN",t:"Cette confiance vous correspond-elle : vous faites davantage confiance à votre expérience et aux faits observables qu'à votre intuition.",o:["Oui, je m'appuie sur les faits","Non, mon intuition compte beaucoup"]},
+  {id:9,d:"SN",t:"Vous reconnaissez-vous dans cette aisance : les tâches précises et bien définies vous conviennent mieux que les projets ouverts.",o:["Oui, la clarté me convient mieux","Non, j'aime explorer librement"]},
+  {id:10,d:"SN",t:"Ce mode mémoriel vous parle-t-il : vous vous souvenez mieux des détails et des faits précis que des impressions générales.",o:["Oui, je retiens les détails","Non, je retiens plutôt le sens et les idées globales"]},
+  {id:11,d:"SN",t:"Vous reconnaissez-vous dans cette façon d'avancer : vous partez de ce qui existe et vous appuyez sur le concret pour progresser.",o:["Oui, je pars de l'existant","Non, je pars de la vision et remonte au concret"]},
+  {id:12,d:"SN",t:"Cette attraction vous correspond-elle : vous êtes davantage attiré(e) par le présent et l'action immédiate que par les possibilités futures.",o:["Oui, j'aime agir maintenant","Non, les possibilités futures m'attirent davantage"]},
+  {id:13,d:"TF",t:"Vous reconnaissez-vous dans ce processus de décision : pour les choix importants, vous vous fiez surtout à l'analyse logique et aux faits.",o:["Oui, je raisonne avant tout","Non, mes valeurs et l'impact humain comptent autant"]},
+  {id:14,d:"TF",t:"Cette préoccupation vous parle-t-elle : dans un désaccord professionnel, vous cherchez surtout la solution la plus juste et efficace.",o:["Oui, j'optimise la solution","Non, je veille à préserver la relation avant tout"]},
+  {id:15,d:"TF",t:"Vous reconnaissez-vous dans ces compliments : on vous valorise souvent pour votre objectivité, votre rigueur et votre esprit analytique.",o:["Oui, c'est l'image que j'ai","Non, on me reconnaît plutôt pour mon empathie et ma bienveillance"]},
+  {id:16,d:"TF",t:"Ce réflexe vous correspond-il : quand quelqu'un vous présente une idée, vous en évaluez d'abord la logique et les points faibles.",o:["Oui, j'analyse en premier","Non, je m'intéresse d'abord à l'enthousiasme et à l'intention"]},
+  {id:17,d:"TF",t:"Vous reconnaissez-vous dans ce critère : une bonne décision doit avant tout être rationnelle et reposer sur des critères objectifs.",o:["Oui, la rationalité prime","Non, la dimension humaine doit être intégrée"]},
+  {id:18,d:"TF",t:"Ce contexte vous parle-t-il : vous vous sentez plus efficace quand vous pouvez raisonner sans biais émotionnel.",o:["Oui, l'objectivité m'aide","Non, considérer l'humain est aussi une forme d'efficacité"]},
+  {id:19,d:"JP",t:"Vous reconnaissez-vous dans cette organisation : votre agenda et votre espace de travail sont plutôt planifiés et structurés.",o:["Oui, j'organise et je planifie","Non, je fonctionne de façon plus souple et flexible"]},
+  {id:20,d:"JP",t:"Ce mode de travail vous correspond-il : vous préférez établir un plan précis et vous y tenir plutôt qu'avancer au fil des événements.",o:["Oui, j'aime avoir un plan","Non, je m'adapte au fur et à mesure"]},
+  {id:21,d:"JP",t:"Ce ressenti vous parle-t-il : les décisions non prises et les situations laissées ouvertes vous mettent mal à l'aise.",o:["Oui, j'ai besoin de clore","Non, garder des options ouvertes me convient"]},
+  {id:22,d:"JP",t:"Vous reconnaissez-vous dans cette façon de travailler : vous préférez terminer une tâche avant d'en commencer une autre.",o:["Oui, je finis ce que je commence","Non, je travaille souvent sur plusieurs choses en parallèle"]},
+  {id:23,d:"JP",t:"Ce rapport à l'imprévu vous correspond-il : les imprévus dans votre emploi du temps vous perturbent et vous réorganisez vite.",o:["Oui, l'imprévu me déstabilise","Non, je m'adapte naturellement"]},
+  {id:24,d:"JP",t:"Vous reconnaissez-vous dans cette posture : vous êtes ponctuel(le), vous anticipez et préparez les choses à l'avance.",o:["Oui, j'anticipe toujours","Non, je suis plutôt spontané(e) et je réagis au moment"]},
+  {id:25,d:"AT",t:"Vous reconnaissez-vous dans cette résilience : après un échec ou une erreur, vous tirez les leçons et passez à autre chose assez facilement.",o:["Oui, je tourne la page assez vite","Non, j'y reviens souvent et j'ai du mal à lâcher"]},
+  {id:26,d:"AT",t:"Ce niveau de confiance vous correspond-il : votre confiance en vous est généralement stable et peu dépendante du regard des autres.",o:["Oui, je suis assez ancré(e)","Non, elle varie selon les retours et l'ambiance"]},
+  {id:27,d:"AT",t:"Vous reconnaissez-vous dans cette réaction : face à une critique sur votre travail, vous l'écoutez calmement avant de décider si vous l'intégrez.",o:["Oui, je reste serein(e)","Non, je suis d'abord affecté(e) avant de pouvoir répondre"]},
+  {id:28,d:"AT",t:"Ce rapport au stress vous parle-t-il : votre niveau de stress au travail est généralement bas et vous vous sentez ancré(e) dans vos capacités.",o:["Oui, je gère bien le stress","Non, je suis sensible aux enjeux et aux attentes"]},
+  {id:29,d:"AT",t:"Vous reconnaissez-vous dans cette motivation : vous cherchez à vous améliorer par choix libre, pas par peur de ne pas être à la hauteur.",o:["Oui, c'est un choix personnel","Non, je ressens un besoin de faire mieux pour être à la hauteur"]},
+  {id:30,d:"AT",t:"Ce mode décisionnel vous correspond-il : vous prenez vos décisions avec assurance, même si vous n'avez pas toutes les informations.",o:["Oui, je décide avec confiance","Non, j'ai besoin de me sentir sûr(e) avant d'agir"]},
+];
+
+var S={screen:'login',user:null,role:null,code:null,test:null,q:0,answers:{},results:{},skips:4,skipped:{}};
+
+// ── SUPABASE DATA LAYER ──
+// Cache local pour performance
+var _cache={codes:null,cons:null,res:null};
+
+async function loadCodes(){
+  if(_cache.codes) return _cache.codes;
+  try{
+    var rows=await sbGet('codes','order=created_at.desc&limit=500');
+    _cache.codes=rows.map(function(r){return{
+      code:r.code,clientName:r.client_name,clientEmail:r.client_email||'',
+      consultantEmail:r.consultant_email||'',expiry:r.expiry,
+      tests:r.tests||['valeurs','orient','signat'],
+      isConsultant:r.is_consultant||false,
+      createdBy:r.created_by||'dirigeant',
+      active:r.active!==false,createdAt:r.created_at,
+      consentGiven:r.consent_given||false,
+      consentDate:r.consent_date||null
+    };});
+    return _cache.codes;
+  }catch(e){console.error('loadCodes error:',e);return[];}
+}
+
+async function saveCode(codeObj){
+  _cache.codes=null;
+  return sbPost('codes',{
+    code:codeObj.code,client_name:codeObj.clientName,
+    client_email:codeObj.clientEmail||'',
+    consultant_email:codeObj.consultantEmail||'',
+    expiry:codeObj.expiry,tests:codeObj.tests,
+    is_consultant:codeObj.isConsultant||false,
+    created_by:codeObj.createdBy||'dirigeant',
+    active:true
+  });
+}
+
+async function deleteCode(code){
+  _cache.codes=null;
+  return sbDelete('codes','code=eq.'+encodeURIComponent(code));
+}
+
+async function updateCodeExpiry(code, expiry){
+  _cache.codes=null;
+  return sbPatch('codes','code=eq.'+encodeURIComponent(code),{expiry:expiry});
+}
+
+async function saveResult(entry){
+  _cache.res=null;
+  return sbPost('resultats',{
+    result_code:entry.code,client_name:entry.client,
+    test_id:entry.test,data:entry.data,
+    access_code:entry.accessCode||'',
+    created_by:entry.createdBy||'beneficiaire'
+  });
+}
+
+async function loadResults(){
+  if(_cache.res) return _cache.res;
+  try{
+    var rows=await sbGet('resultats','order=created_at.desc&limit=200');
+    _cache.res=rows.map(function(r){return{
+      code:r.result_code,client:r.client_name,
+      test:r.test_id,data:r.data,
+      accessCode:r.access_code,date:r.created_at
+    };});
+    return _cache.res;
+  }catch(e){console.error('loadResults error:',e);return[];}
+}
+
+
+function ss(id){
+  var ids=['screen-login','screen-intro','screen-dashboard','screen-test','screen-results','screen-admin'],i;
+  for(i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el)el.style.display='none';
+  }
+  var t=document.getElementById(id);
+  if(t)t.style.display='block';
+  window.scrollTo(0,0);
+}
+function openM(id){document.getElementById(id).classList.add('open');}
+function closeM(id){document.getElementById(id).classList.remove('open');}
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},3000);}
+function clip(text){navigator.clipboard.writeText(text).then(function(){toast('Copié : '+text);});}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+
+function setTab(tab){
+  document.getElementById('tab-b').className='ltab'+(tab==='b'?' act':'');
+  document.getElementById('tab-c').className='ltab'+(tab==='c'?' act':'');
+  document.getElementById('lbl-code').textContent=tab==='c'?'Code consultant':"Code d'accès";
+  document.getElementById('inp-code').placeholder=tab==='c'?'Ex : CONS-XXXX-XXXX':'Ex : RP-ABC-1234';
+}
+function genCode(){
+  var ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',c='RP-',i;
+  for(i=0;i<3;i++)c+=ch[Math.floor(Math.random()*ch.length)];
+  c+='-';
+  for(i=0;i<4;i++)c+=ch[Math.floor(Math.random()*ch.length)];
+  return c;
+}
+function genConsCode(){
+  var ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',c='CONS-',i;
+  for(i=0;i<4;i++)c+=ch[Math.floor(Math.random()*ch.length)];
+  c+='-';
+  for(i=0;i<4;i++)c+=ch[Math.floor(Math.random()*ch.length)];
+  return c;
+}
+function genResCode(){
+  var ch='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789',c='RES-',i;
+  for(i=0;i<6;i++)c+=ch[Math.floor(Math.random()*ch.length)];
+  return c;
+}
+function doLogout(){
+  S={screen:'login',user:null,role:null,code:null,test:null,q:0,answers:{},results:{},skips:4,skipped:{}};
+  ss('screen-login');
+}
+
+function valCode(code){
+  var upper=code.toUpperCase().trim();
+  // DEMO fallback first
+  if(upper==='DEMO-2024'){
+    return Promise.resolve({code:'DEMO-2024',clientName:'Client Demo',clientEmail:'',
+      consultantEmail:'',expiry:'2027-12-31',
+      tests:['valeurs','orient','signat'],isConsultant:false,active:true});
+  }
+  // Supabase lookup
+  return new Promise(function(resolve){
+    var xhr=new XMLHttpRequest();
+    var url=SB_URL+'/rest/v1/codes?code=eq.'+upper+'&limit=1';
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('apikey', SB_KEY);
+    xhr.setRequestHeader('Authorization', 'Bearer '+SB_KEY);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.onload=function(){
+      if(xhr.status===200){
+        try{
+          var rows=JSON.parse(xhr.responseText);
+          if(!rows||!rows.length){resolve(null);return;}
+          var r=rows[0];
+          if(r.expiry&&new Date(r.expiry)<new Date()){resolve('expired');return;}
+          if(r.active===false){resolve('expired');return;}
+          resolve({code:r.code,clientName:r.client_name,clientEmail:r.client_email||'',
+            consultantEmail:r.consultant_email||'',expiry:r.expiry,
+            tests:r.tests||['valeurs','orient','signat'],
+            isConsultant:r.is_consultant||false,active:true});
+        }catch(e){console.error('parse error:',e);resolve(null);}
+      }else{console.error('XHR error:',xhr.status);resolve(null);}
+    };
+    xhr.onerror=function(){console.error('XHR network error');resolve(null);};
+    xhr.send();
+  });
+}
+
+
+async function doLogin(){
+  var name=document.getElementById('inp-name').value.trim();
+  var code=document.getElementById('inp-code').value.trim();
+  var err=document.getElementById('lerr');
+  err.style.display='none';
+  console.log('name:', name, 'code:', code);
+  if(!name){err.textContent='Veuillez entrer votre prénom et nom.';err.style.display='block';return;}
+  if(!code){err.textContent="Veuillez entrer votre code d'accès.";err.style.display='block';return;}
+  var result=null;
+  try{
+    result=await valCode(code);
+  }catch(ex){
+    console.error('valCode exception:', ex);
+  }
+  if(!result){err.textContent='Code invalide. Vérifiez et réessayez.';err.style.display='block';return;}
+  if(result==='expired'){err.textContent='Ce code a expiré. Contactez votre consultant.';err.style.display='block';return;}
+  S.user=name;S.code=result;
+  S.role=result.isConsultant?'consultant':'beneficiaire';
+  showIntro(S.role);
+}
+function doAdminLogin(){
+  if(document.getElementById('admpw').value===APW){
+    closeM('m-admpw');S.role='admin';showIntro('admin');
+  } else {
+    document.getElementById('admpw-err').style.display='block';
+  }
+}
+function doLogout(){S={screen:'login',user:null,role:null,code:null,test:null,q:0,answers:{},results:{},skips:4,skipped:{}};ss('screen-login');}
+
+function showIntro(role){
+  ss('screen-intro');
+  var firstName=(S.user||'').split(' ')[0];
+  document.getElementById('ibody').innerHTML=role==='admin'?buildIntroAdmin():role==='consultant'?buildIntroCons():buildIntroBenef(firstName);
+  document.getElementById('ibadge').textContent=role==='admin'?'Espace Dirigeant':role==='consultant'?'Espace Consultant':'Bienvenue sur votre espace';
+  document.getElementById('ih1').textContent=role==='admin'?'Administration RELIANCE\u00ae':'Plateforme RELIANCE\u00ae';
+  document.getElementById('isub').textContent=role==='admin'?'Gestion des acc\u00e8s, suivi et cadre m\u00e9thodologique.':role==='consultant'?"Plateforme d'\u00e9valuation \u00e0 destination de vos b\u00e9n\u00e9ficiaires.":"Des outils d'exploration con\u00e7us pour mieux vous conna\u00eetre.";
+  document.getElementById('iwelc').textContent=role==='admin'?'Rodrigue Poncet \u2014 RP Coaching & Formation':role==='consultant'?'Bonjour '+firstName:'Bonjour '+firstName+' \u2014 Voici ce que vous allez vivre';
+}
+
+function buildIntroBenef(fn){
+  return '<div class="icard"><div class="icard-icon">\ud83c\udfaf</div><h3>\u00c0 quoi servent ces \u00e9valuations ?</h3>'
+    +'<p>Ces outils ont \u00e9t\u00e9 con\u00e7us dans le cadre de votre bilan de comp\u00e9tences. Ils constituent des <strong>supports de r\u00e9flexion</strong> pour mieux vous conna\u00eetre \u2014 non des tests de recrutement ni des diagnostics cliniques.</p>'
+    +'<p>Il n\'y a pas de bonnes ou de mauvaises r\u00e9ponses. R\u00e9pondez avec spontan\u00e9it\u00e9.</p></div>'
+    +'<div class="igrid">'
+    +'<div class="imini"><div class="mico">\ud83e\udded</div><h4>Boussole de Valeurs</h4><p>40 portraits \u00b7 ~12 min</p></div>'
+    +'<div class="imini"><div class="mico">\ud83c\udfaf</div><h4>Orientation Professionnelle</h4><p>42 questions \u00b7 ~10 min</p></div>'
+    +'<div class="imini"><div class="mico">\u2736</div><h4>Signature Comportementale</h4><p>30 questions \u00b7 ~15 min</p></div>'
+    +'</div>'
+    +'<div class="icard"><div class="icard-icon">\ud83d\udd12</div><h3>Confidentialit\u00e9</h3>'
+    +'<p>Vos r\u00e9ponses sont utilis\u00e9es <strong>exclusivement dans le cadre de votre accompagnement</strong>. \u00c0 la fin de chaque test vous recevrez un <strong>code r\u00e9sultat</strong> \u00e0 partager avec votre consultant \u2014 c\'est vous qui initiez ce partage.</p>'
+    +'<p>Vous pouvez <strong>passer certaines questions</strong> sans invalider votre profil.</p></div>'
+    +'<button class="ibtn" onclick="showDash()">Acc\u00e9der \u00e0 mes tests \u2192</button>';
+}
+
+function buildIntroCons(){
+  return '<div class="icard"><div class="icard-icon">\ud83e\udd1d</div><h3>Votre r\u00f4le en tant que consultant RELIANCE\u00ae</h3>'
+    +'<p>Ces outils sont des <strong>supports d\'accompagnement professionnel</strong>. Ils s\'inscrivent dans la m\u00e9thodologie RELIANCE\u00ae et doivent \u00eatre utilis\u00e9s exclusivement dans le cadre d\'un bilan de comp\u00e9tences ou d\'un coaching professionnel.</p>'
+    +'<ul><li>Ne pas reproduire, modifier ou redistribuer les outils sans autorisation</li>'
+    +'<li>Utiliser les r\u00e9sultats dans un cadre \u00e9thique et bienveillant</li>'
+    +'<li>Ne jamais utiliser les profils \u00e0 des fins de recrutement</li>'
+    +'<li>Pr\u00e9senter les r\u00e9sultats comme des pistes de r\u00e9flexion, non des v\u00e9rit\u00e9s absolues</li></ul></div>'
+    +'<div class="icard"><div class="icard-icon">\ud83d\udccb</div><h3>R\u00e9cup\u00e9rer les r\u00e9sultats d\'un b\u00e9n\u00e9ficiaire</h3>'
+    +'<p>\u00c0 la fin de chaque test, votre b\u00e9n\u00e9ficiaire re\u00e7oit un <strong>code r\u00e9sultat</strong> (ex: RES-ABC123). Il vous le communique par email ou SMS. Saisissez-le dans votre panel pour acc\u00e9der au rapport complet.</p></div>'
+    +'<button class="ibtn" onclick="goAdmin()">Acc\u00e9der \u00e0 mon espace \u2192</button>';
+}
+
+function buildIntroAdmin(){
+  return '<div class="icard"><div class="icard-icon">\ud83d\udcda</div><h3>Cr\u00e9dibilit\u00e9 des mod\u00e8les utilis\u00e9s</h3>'
+    +'<div class="cred"><h4>Boussole de Valeurs \u2014 Inspir\u00e9 de Schwartz</h4><p>Le mod\u00e8le de <strong>Shalom H. Schwartz</strong> est valid\u00e9 dans plus de 70 pays. Les questions RELIANCE\u00ae s\'en inspirent avec une reformulation projective originale.</p></div>'
+    +'<div class="cred"><h4>Orientation Professionnelle \u2014 Inspir\u00e9 de Holland (RIASEC)</h4><p>Le mod\u00e8le RIASEC de <strong>John L. Holland</strong> est reconnu par l\'ONISEP et France Travail. Lien direct vers les codes ROME MétierScope.</p></div>'
+    +'<div class="cred"><h4>Signature Comportementale \u2014 Inspir\u00e9 du MBTI</h4><p>Les 5 axes reprennent la structure du MBTI sans reproduire aucune question prot\u00e9g\u00e9e. Toutes les formulations sont originales.</p></div></div>'
+    +'<div class="icard"><div class="icard-icon">&#128202;</div><h3>Arguments pour l’auditeur, le prescripteur et le bénéficiaire</h3><div class="cred"><h4>Pour l’auditeur Qualiopi</h4><p>Ces évaluations s’inscrivent dans la <strong>phase d’investigation</strong> du bilan (L.6313-4 Code du travail). Elles permettent d’analyser aptitudes, compétences et motivations — usage légalement prévu. Présentées comme <strong>supports pédagogiques</strong> conformément à Qualiopi Critère 2 Indicateur 6. Consentement éclairé horodaté, traçabilité complète disponible.</p></div><div class="cred"><h4>Pour le prescripteur (France Travail, OPCO, RH)</h4><p>Les outils sont fondés sur des modèles scientifiques reconnus (Schwartz, Holland, Jung). Ils ne sont pas utilisés à des fins de sélection ou de recrutement. Chaque résultat est interprété en entretien avec un consultant certifié, dans le respect du cadre déontologique du bilan de compétences. RP Coaching &amp; Formation est certifié <strong>Qualiopi</strong> et titulaire du NDA 27390135539.</p></div><div class="cred"><h4>Pour le bénéficiaire inquiet</h4><p>Ces évaluations ne sont pas des tests de personnalité à étiquette. Elles sont conçues pour vous aider à <strong>mieux vous connaître</strong>, pas à vous classer. Les résultats vous appartiennent : c’est vous qui choisissez de les partager avec votre consultant. Il n’y a pas de bonnes ou de mauvaises réponses.</p></div><div class="cred"><h4>Cadre légal</h4><p>Ces évaluations s’inscrivent dans la <strong>phase d’investigation</strong> du bilan (L.6313-4 Code du travail). Objectif légal : analyser aptitudes, compétences et motivations.</p><p style="margin-top:8px;">Présentés comme <strong>supports pédagogiques</strong> conformément à Qualiopi (Critère 2, Indicateur 6). Consentement horodaté.</p></div><div class="cred"><h4>Traçabilité pour audit</h4><ul style="font-size:.83rem;color:var(--tx);line-height:1.8;padding-left:16px;"><li>Date et heure de chaque passation</li><li>Consentement éclairé accepté avant accès</li><li>Code nominatif avec expiration</li><li>Consultant créateur identifié</li><li>Résultats conservés 3 ans</li></ul></div></div><div class="icard"><div class="icard-icon">\u2696\ufe0f</div><h3>Protection juridique</h3>'
+    +'<div class="prot"><h4>Mention obligatoire dans vos documents clients</h4>'
+    +'<div class="legal-quote">\u00ab Les outils d\u2019\u00e9valuation utilis\u00e9s (Boussole de Valeurs, Orientation Professionnelle, Signature Comportementale) sont des instruments d\u00e9velopp\u00e9s dans le cadre de la m\u00e9thodologie RELIANCE\u00ae, inspir\u00e9s de mod\u00e8les psychom\u00e9triques reconnus. Ils constituent des supports de r\u00e9flexion professionnelle et ne sauraient \u00eatre assimil\u00e9s \u00e0 des tests psychom\u00e9triques norm\u00e9s ou \u00e0 des diagnostics cliniques. \u00bb</div>'
+    +'<ul><li>Convention de bilan : clause mentionnant l\'usage des outils comme supports p\u00e9dagogiques</li>'
+    +'<li>RGPD : dur\u00e9e de conservation et droit \u00e0 l\'effacement</li></ul></div></div>'
+    +'<div class="icard"><div class="icard-icon">\ud83d\udee0\ufe0f</div><h3>Faire \u00e9voluer la plateforme</h3>'
+    +'<p>Utilisez ce bloc pour demander des modifications \u00e0 Claude. Copiez et collez dans une nouvelle conversation.</p>'
+    +'<div class="devbox"><div class="devbox-hdr"><span class="devbox-lbl">Commande de modification</span>'
+    +'<button class="devbox-copy" onclick="copyDevPrompt()">Copier</button></div>'
+    +'<pre id="devprompt">Je travaille sur la plateforme RELIANCE\u00ae Tests v4 (HTML standalone).\n\nContexte : 3 tests (Boussole de Valeurs, Orientation Professionnelle, Signature Comportementale), codes d\'acc\u00e8s, panel admin, gestion consultants.\n\nModification demand\u00e9e :\n[D\u00c9CRIVEZ ICI]</pre></div></div>'
+    +'<button class="ibtn" onclick="goAdmin()">Acc\u00e9der \u00e0 l\'administration \u2192</button>';
+}
+
+async function goAdmin(){
+  ss('screen-admin');
+  if(S.role==='consultant'){
+    var tabs=document.querySelectorAll('.atab');
+    for(var ti=0;ti<tabs.length;ti++){if(tabs[ti].textContent.indexOf('Consultant')>-1)tabs[ti].style.display='none';}
+    var pc=document.getElementById('panel-consultants');
+    if(pc)pc.style.display='none';
+  }
+  await renderCl();
+  if(S.role!=='consultant')await renderCo();
+}
+
+function showDash(){
+  // Restore consent from sessionStorage
+  if(!S.consented&&sessionStorage.getItem('reliance_consented_'+((S.code&&S.code.code)||'')))
+    S.consented=true;
+  if(!S.consented&&S.role==='beneficiaire'){showConsent();return;}
+  ss('screen-dashboard');
+  document.getElementById('dh-uname').textContent=S.user||'';
+  document.getElementById('dgreet').textContent='Bonjour, '+(S.user||'').split(' ')[0]+' \ud83d\udc4b';
+  var avail=(S.code&&S.code.tests)||['valeurs','orient','signat'];
+  var html='',i,tid,m,done,fn2;
+  for(i=0;i<avail.length;i++){
+    tid=avail[i];m=TM[tid];if(!m)continue;
+    done=S.results[tid]!=null;
+    fn2=done?"showResState('"+tid+"')":"startTest('"+tid+"')";
+    html+='<div class="tcard'+(done?' done':'')+'" onclick="'+fn2+'">'
+      +'<div class="tcnum">'+String(i+1).padStart(2,'0')+'</div>'
+      +'<div class="tcico '+m.ic+'">'+m.icon+'</div>'
+      +'<div class="tcsub">'+m.sub+'</div>'
+      +'<div class="tctitle">'+m.title+'</div>'
+      +'<div class="tcdesc">'+m.desc+'</div>'
+      +'<div class="tcmeta"><span>'+m.duree+'</span><span>'+m.nb+'</span></div>'
+      +(done?'<span class="bdone">\u2713 R\u00e9sultats disponibles</span>':'<span class="bavail">\u2192 Commencer</span>')
+      +'</div>';
+  }
+  document.getElementById('tgrid').innerHTML=html;
+}
+
+function showConsent(){
+  ss('screen-intro');
+  document.getElementById('ibadge').textContent='Avant de commencer';
+  document.getElementById('ih1').textContent='Consentement éclairé';
+  document.getElementById('isub').textContent='Veuillez lire et accepter les conditions ci-dessous';
+  document.getElementById('iwelc').textContent='';
+  document.getElementById('ibody').innerHTML=
+    '<div class="icard"><div class="icard-icon">&#128221;</div>'
+    +'<h3>Information importante</h3>'
+    +'<p>Dans le cadre de votre bilan de compétences avec <strong>RP Coaching &amp; Formation</strong>, '
+    +'vous allez réaliser des évaluations conçues comme des <strong>supports de réflexion professionnelle</strong>.</p>'
+    +'<div style="background:rgba(44,95,122,.05);border-radius:10px;padding:16px;margin:14px 0;">'
+    +'<p style="font-size:.84rem;color:var(--tx);line-height:1.75;">'
+    +'Ces outils <strong>ne sont pas des tests psychométriques certifiés</strong>. '
+    +'Inspirés des modèles Schwartz, Holland et MBTI, ils servent de supports d’accompagnement '
+    +'dans votre démarche de bilan de compétences.</p></div>'
+    +'<p style="font-size:.84rem;color:var(--tx);line-height:1.75;margin-bottom:14px;">'
+    +'Vos réponses sont <strong>confidentielles</strong> et utilisées uniquement dans le cadre de votre accompagnement. '
+    +'Droit d’accès et d’effacement garanti (RGPD).</p>'
+    +'<div style="background:rgba(233,113,50,.06);border:1px solid rgba(233,113,50,.25);border-radius:10px;padding:16px;">'
+    +'<label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">'
+    +'<input type="checkbox" id="consent-cb" style="margin-top:3px;accent-color:#2C5F7A;width:18px;height:18px;min-width:18px;">'
+    +'<span style="font-size:.84rem;color:var(--tx);line-height:1.65;">'
+    +'J’ai pris connaissance que ces évaluations sont des <strong>supports de réflexion</strong> '
+    +'et non des tests certifiés. J’accepte que mes réponses soient utilisées dans le cadre de mon bilan.'
+    +'</span></label></div>'
+    +'<button class="ibtn" style="margin-top:16px;background:#2C5F7A;-webkit-appearance:none;" onclick="acceptConsent()">'
+    +'Accepter et accéder à mes tests →</button>'
+    +'</div>';
+}
+
+async function acceptConsent(){
+  var cb=document.getElementById('consent-cb');
+  if(!cb||!cb.checked){toast('Veuillez cocher la case pour continuer.');return;}
+  S.consented=true;
+  S.consentDate=new Date().toISOString();
+  sessionStorage.setItem('reliance_consented_'+((S.code&&S.code.code)||''),'1');
+  if(S.code&&S.code.code){
+    try{
+      await sbPatch('codes','code=eq.'+encodeURIComponent(S.code.code),{consent_given:true,consent_date:S.consentDate});
+      console.log('Consent saved to Supabase');
+    }catch(e){
+      console.error('Consent save error:',e);
+    }
+  }
+  showDash();
+}
+
+function startTest(tid){
+  S.test=tid;S.q=0;S.answers[tid]={};S.skips=4;S.skipped={};
+  ss('screen-test');
+  document.getElementById('ttitle').textContent=TM[tid].title;
+  document.getElementById('spwrap').style.display=TM[tid].skipable?'block':'none';
+  renderQ();
+}
+function getQs(){return S.test==='valeurs'?VQ:S.test==='orient'?OQ:SQ;}
+function renderQ(){
+  var qs=getQs(),q=qs[S.q],total=qs.length;
+  var pct=Math.round(S.q/total*100);
+  document.getElementById('ptxt').textContent='Question '+(S.q+1)+' / '+total;
+  document.getElementById('ppct').textContent=pct+'%';
+  document.getElementById('pfill').style.width=pct+'%';
+  if(TM[S.test].skipable){
+    var sp=document.getElementById('spill');
+    sp.textContent=S.skips+' passe'+(S.skips>1?'s':'');
+    sp.className='spill'+(S.skips===1?' warn':S.skips===0?' none':'');
+  }
+  var saved=S.answers[S.test][q.id];
+  var skipped=S.skipped[q.id];
+  var isLast=S.q===total-1;
+  var canSkip=TM[S.test].skipable&&S.skips>0&&!skipped;
+  var html='<div class="qblk act">'
+    +'<div class="qnum">Question '+(S.q+1)+' sur '+total+(skipped?' \u00b7 <em style="color:var(--o)">Pass\u00e9e</em>':'')+'</div>'
+    +'<div class="qtxt">'+esc(q.t)+'</div>';
+  if(q.c)html+='<div class="qctx">'+esc(q.c)+'</div>';
+  if(S.test==='valeurs'){
+    html+='<div class="lkrt">';
+    for(var v=1;v<=6;v++){
+      html+='<button class="lbtn'+(saved===v?' sel':'')+'" onclick="pick('+q.id+','+v+',this)"><span class="vn">'+v+'</span></button>';
+    }
+    html+='</div><div class="llbls"><span>Ne me ressemble pas du tout</span><span>Me ressemble tout \u00e0 fait</span></div>';
+  }else{
+    var opts=q.o||['Oui','Non'];
+    html+='<div class="opts">';
+    for(var oi=0;oi<opts.length;oi++){
+      html+='<button class="obtn'+(saved===oi?' sel':'')+'" onclick="pick('+q.id+','+oi+',this)">'
+        +'<div class="radio"></div><div class="otxt">'+esc(opts[oi])+'</div></button>';
+    }
+    html+='</div>';
+  }
+  html+='<div class="navbtns">'
+    +'<button class="btn-prev" style="visibility:'+(S.q>0?'visible':'hidden')+'" onclick="prevQ()">\u2190 Pr\u00e9c\u00e9dent</button>'
+    +'<div style="display:flex;gap:8px;">';
+  if(TM[S.test].skipable){
+    html+='<button class="btn-skip"'+(canSkip?'':' disabled')+' onclick="skipQ()">Passer ('+S.skips+')</button>';
+  }
+  html+='<button class="btn-next" id="btn-next"'+((saved==null&&!skipped)?' disabled':'')+' onclick="'+(isLast?'finishTest()':'nextQ()')+'">'+( isLast?'Voir mes r\u00e9sultats \u2192':'Suivant \u2192')+'</button>'
+    +'</div></div></div>';
+  document.getElementById('tcont').innerHTML=html;
+  window.scrollTo(0,0);
+}
+function pick(qId,val,el){
+  S.answers[S.test][qId]=val;delete S.skipped[qId];
+  var btns=S.test==='valeurs'?document.querySelectorAll('.lbtn'):document.querySelectorAll('.obtn');
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove('sel');
+  el.classList.add('sel');
+  document.getElementById('btn-next').disabled=false;
+}
+function nextQ(){var qs=getQs();if(S.q<qs.length-1){S.q++;renderQ();}}
+function prevQ(){if(S.q>0){S.q--;renderQ();}}
+function skipQ(){if(S.skips<=0)return;S.skipped[getQs()[S.q].id]=true;S.skips--;nextQ();}
+function confirmBack(){showDash();}
+
+async function finishTest(){
+  var r;
+  if(S.test==='valeurs')r=calcV();
+  else if(S.test==='orient')r=calcO();
+  else r=calcS();
+  var rc=genResCode();
+  r._code=rc;r._date=new Date().toISOString();r._client=S.user;r._test=S.test;
+  S.results[S.test]=r;
+  try{
+    await saveResult({code:rc,client:S.user,test:S.test,date:r._date,data:r,accessCode:(S.code&&S.code.code)||'',createdBy:'beneficiaire'});
+  }catch(e){console.error('saveResult error:',e);}
+  showRes(S.test,r);
+}
+function calcV(){
+  var dims=['A','S','H','R','P','SE','C','T','B','U'],scores={},counts={},i,d,a;
+  for(i=0;i<dims.length;i++){scores[dims[i]]=0;counts[dims[i]]=0;}
+  for(i=0;i<VQ.length;i++){a=S.answers.valeurs[VQ[i].id];if(a!=null){scores[VQ[i].d]+=a;counts[VQ[i].d]++;}}
+  var avg={};
+  for(i=0;i<dims.length;i++)avg[dims[i]]=counts[dims[i]]>0?scores[dims[i]]/counts[dims[i]]:0;
+  return{scores:avg,sorted:dims.slice().sort(function(a,b){return avg[b]-avg[a];}),dims:dims};
+}
+function calcO(){
+  var keys=['R','I','Ar','So','E','C'],scores={},counts={},i,a;
+  for(i=0;i<keys.length;i++){scores[keys[i]]=0;counts[keys[i]]=0;}
+  for(i=0;i<OQ.length;i++){a=S.answers.orient[OQ[i].id];if(a===0)scores[OQ[i].d]=(scores[OQ[i].d]||0)+1;if(a!=null)counts[OQ[i].d]=(counts[OQ[i].d]||0)+1;}
+  var pcts={};
+  for(i=0;i<keys.length;i++)pcts[keys[i]]=counts[keys[i]]>0?Math.round(scores[keys[i]]/counts[keys[i]]*100):0;
+  var sorted=keys.slice().sort(function(a,b){return pcts[b]-pcts[a];});
+  return{pcts:pcts,sorted:sorted,code3:sorted[0]+sorted[1]+sorted[2]};
+}
+function calcS(){
+  var ax={EI:{E:0,I:0},SN:{S:0,N:0},TF:{T:0,F:0},JP:{J:0,P:0},AT:{A:0,T2:0}},i,q,a;
+  for(i=0;i<SQ.length;i++){q=SQ[i];a=S.answers.signat[q.id];if(a==null)continue;
+    if(q.d==='EI'){if(a===0)ax.EI.E++;else ax.EI.I++;}
+    if(q.d==='SN'){if(a===0)ax.SN.S++;else ax.SN.N++;}
+    if(q.d==='TF'){if(a===0)ax.TF.T++;else ax.TF.F++;}
+    if(q.d==='JP'){if(a===0)ax.JP.J++;else ax.JP.P++;}
+    if(q.d==='AT'){if(a===0)ax.AT.A++;else ax.AT.T2++;}
+  }
+  function pf(a,b){var t=a+b||1;return{l:Math.round(a/t*100),r:Math.round(b/t*100)};}
+  var EI=pf(ax.EI.E,ax.EI.I),SN=pf(ax.SN.S,ax.SN.N),TF=pf(ax.TF.T,ax.TF.F),JP=pf(ax.JP.J,ax.JP.P),AT=pf(ax.AT.A,ax.AT.T2);
+  var type=(EI.l>=EI.r?'E':'I')+(SN.l>=SN.r?'S':'N')+(TF.l>=TF.r?'T':'F')+(JP.l>=JP.r?'J':'P');
+  return{type:type,variant:AT.l>=AT.r?'A':'T',pcts:{E:EI.l,I:EI.r,S:SN.l,N:SN.r,T:TF.l,F:TF.r,J:JP.l,P:JP.r,A:AT.l,Tu:AT.r}};
+}
+
+
+// ── RAPPORTS DEPUIS SUPABASE ──
+var _rapportCache={};
+
+function loadRapport(testId, profilCode){
+  var key=testId+'_'+profilCode;
+  if(_rapportCache[key]) return Promise.resolve(_rapportCache[key]);
+  return new Promise(function(resolve){
+    var xhr=new XMLHttpRequest();
+    var url=SB_URL+'/rest/v1/rapports?test_id=eq.'+testId+'&profil_code=eq.'+profilCode+'&limit=1';
+    xhr.open('GET',url,true);
+    xhr.setRequestHeader('apikey',SB_KEY);
+    xhr.setRequestHeader('Authorization','Bearer '+SB_KEY);
+    xhr.setRequestHeader('Accept','application/json');
+    xhr.onload=function(){
+      if(xhr.status===200){
+        try{
+          var rows=JSON.parse(xhr.responseText);
+          if(rows&&rows.length){
+            _rapportCache[key]=rows[0].contenu;
+            resolve(rows[0].contenu);
+          }else{resolve(null);}
+        }catch(e){resolve(null);}
+      }else{resolve(null);}
+    };
+    xhr.onerror=function(){resolve(null);};
+    xhr.send();
+  });
+}
+
+function renderRapportValeur(dim, contenu){
+  if(!contenu) return '';
+  return '<div class="rsec" style="border-left:4px solid var(--o);padding-left:0;">'
+    +'<div style="background:linear-gradient(135deg,rgba(44,95,122,.05),rgba(233,113,50,.03));border-radius:12px;padding:22px;">'
+    +'<div style="font-size:.7rem;color:var(--o);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;">Votre valeur principale</div>'
+    +'<h3 style="font-family:Cormorant Garamond,serif;font-size:1.5rem;color:var(--pd);margin-bottom:14px;">'+contenu.emoji+' '+contenu.label+'</h3>'
+    +'<p style="font-size:.86rem;color:var(--tx);line-height:1.75;margin-bottom:14px;">'+contenu.definition+'</p>'
+    +'<div style="background:white;border-radius:8px;padding:14px 16px;margin-bottom:10px;">'
+    +'<div style="font-size:.72rem;font-weight:600;color:var(--pd);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Ce que cela signifie pour vous</div>'
+    +'<p style="font-size:.83rem;color:var(--tx);line-height:1.7;">'+contenu.comprendre+'</p></div>'
+    +'<div style="background:white;border-radius:8px;padding:14px 16px;margin-bottom:10px;">'
+    +'<div style="font-size:.72rem;font-weight:600;color:var(--pd);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Environnements et métiers qui vous correspondent</div>'
+    +'<p style="font-size:.83rem;color:var(--tx);line-height:1.7;">'+contenu.metiers+'</p></div>'
+    +'<div style="background:rgba(233,113,50,.06);border-radius:8px;padding:12px 16px;">'
+    +'<div style="font-size:.72rem;font-weight:600;color:var(--od);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;">Point de vigilance</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.7;font-style:italic;">'+contenu.vigilance+'</p></div>'
+    +'</div></div>';
+}
+
+function renderRapportRiasec(dim, contenu){
+  if(!contenu) return '';
+  return '<div class="rsec" style="border-left:4px solid var(--p);padding-left:0;">'
+    +'<div style="background:rgba(44,95,122,.04);border-radius:12px;padding:22px;">'
+    +'<div style="font-size:.7rem;color:var(--p);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;">Votre orientation dominante</div>'
+    +'<h3 style="font-family:Cormorant Garamond,serif;font-size:1.4rem;color:var(--pd);margin-bottom:12px;">'+contenu.emoji+' '+contenu.titre+'</h3>'
+    +'<p style="font-size:.86rem;color:var(--tx);line-height:1.75;margin-bottom:14px;">'+contenu.definition+'</p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Caractéristiques</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+contenu.caracteristiques+'</p></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Points forts</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+contenu.points_forts+'</p></div></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;margin-bottom:10px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Environnement idéal</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+contenu.environnement+'</p></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Pistes métiers</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+contenu.metiers+'</p></div>'
+    +'</div></div>';
+}
+
+function renderRapportMbti(type, contenu){
+  if(!contenu) return '';
+  return '<div class="rsec" style="border-left:4px solid var(--o);padding-left:0;">'
+    +'<div style="background:linear-gradient(135deg,rgba(7,79,106,.05),rgba(233,113,50,.03));border-radius:12px;padding:22px;">'
+    +'<div style="font-size:.7rem;color:var(--o);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;">Votre profil de personnalit\u00e9</div>'
+    +'<h3 style="font-family:Cormorant Garamond,serif;font-size:1.4rem;color:var(--pd);margin-bottom:6px;">'+(contenu.titre||type)+'</h3>'
+    +'<p style="font-size:.86rem;color:var(--tx);line-height:1.75;margin-bottom:14px;">'+(contenu.description||'')+'</p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--ok);text-transform:uppercase;margin-bottom:5px;">Vos forces</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(contenu.forces||'')+'</p></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--od);text-transform:uppercase;margin-bottom:5px;">Points de vigilance</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(contenu.faiblesses||contenu.defis||'')+'</p></div></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;margin-bottom:10px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Comportement au travail</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(contenu.comportement_travail||contenu.travail_ideal||'')+'</p></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--ok);text-transform:uppercase;margin-bottom:5px;">Situations \u00e9panouissantes</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(contenu.situations_epanouissantes||'')+'</p></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--er);text-transform:uppercase;margin-bottom:5px;">Situations difficiles</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(contenu.situations_difficiles||'')+'</p></div></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px 14px;">'
+    +'<div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Pistes m\u00e9tiers</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(contenu.parcours_pro||contenu.metiers||'')+'</p></div>'
+    +'</div></div>';
+}
+
+function renderRapportValeur(dim,c2){
+  if(!c2)return '';
+  return '<div class="rsec" style="border-left:4px solid var(--o);padding-left:0;">'
+    +'<div style="background:linear-gradient(135deg,rgba(44,95,122,.05),rgba(233,113,50,.03));border-radius:12px;padding:22px;">'
+    +'<div style="font-size:.7rem;color:var(--o);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;">Votre valeur principale</div>'
+    +'<h3 style="font-family:Cormorant Garamond,serif;font-size:1.5rem;color:var(--pd);margin-bottom:14px;">'+(c2.emoji||'')+(c2.label||dim)+'</h3>'
+    +'<p style="font-size:.86rem;color:var(--tx);line-height:1.75;margin-bottom:14px;">'+(c2.definition||'')+'</p>'
+    +'<div style="background:white;border-radius:8px;padding:14px;margin-bottom:10px;">'
+    +'<div style="font-size:.72rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:6px;">Ce que cela signifie pour vous</div>'
+    +'<p style="font-size:.83rem;color:var(--tx);line-height:1.7;">'+(c2.comprendre||'')+'</p></div>'
+    +'<div style="background:white;border-radius:8px;padding:14px;margin-bottom:10px;">'
+    +'<div style="font-size:.72rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:6px;">Environnements et m\u00e9tiers correspondants</div>'
+    +'<p style="font-size:.83rem;color:var(--tx);line-height:1.7;">'+(c2.metiers||'')+'</p></div>'
+    +'<div style="background:rgba(233,113,50,.06);border-radius:8px;padding:12px;">'
+    +'<div style="font-size:.72rem;font-weight:600;color:var(--od);text-transform:uppercase;margin-bottom:5px;">Point de vigilance</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.7;font-style:italic;">'+(c2.vigilance||'')+'</p></div>'
+    +'</div></div>';
+}
+
+function renderRapportRiasec(dim,c2){
+  if(!c2)return '';
+  return '<div class="rsec" style="border-left:4px solid var(--p);padding-left:0;">'
+    +'<div style="background:rgba(44,95,122,.04);border-radius:12px;padding:22px;">'
+    +'<h3 style="font-family:Cormorant Garamond,serif;font-size:1.4rem;color:var(--pd);margin-bottom:12px;">'+(c2.titre||dim)+'</h3>'
+    +'<p style="font-size:.86rem;color:var(--tx);line-height:1.75;margin-bottom:14px;">'+(c2.definition||'')+'</p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">'
+    +'<div style="background:white;border-radius:8px;padding:12px;"><div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Points forts</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(c2.points_forts||'')+'</p></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px;"><div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Environnement id\u00e9al</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(c2.environnement||'')+'</p></div></div>'
+    +'<div style="background:white;border-radius:8px;padding:12px;"><div style="font-size:.7rem;font-weight:600;color:var(--pd);text-transform:uppercase;margin-bottom:5px;">Pistes m\u00e9tiers</div>'
+    +'<p style="font-size:.81rem;color:var(--tx);line-height:1.65;">'+(c2.metiers||'')+'</p></div>'
+    +'</div></div>';
+}
+
+function htmlV(r){
+  var dims=r.dims||['A','S','H','R','P','SE','C','T','B','U'];
+  var bars='',i,d,pct,top3=r.sorted.slice(0,3);
+  for(i=0;i<dims.length;i++){
+    d=dims[i];pct=Math.round((r.scores[d]/6)*100);
+    bars+='<div class="bitem"><div class="brow"><span class="bname">'+VM[d].l+'</span><span class="bscore">'+r.scores[d].toFixed(1)+'/6</span></div>'
+      +'<div class="btrack"><div class="bfill" data-w="'+pct+'" style="width:0"></div></div></div>';
+  }
+  var top3html='';
+  for(i=0;i<3;i++){
+    d=top3[i];
+    top3html+='<div class="pdesc"><p><strong>'+(i+1)+'. '+VM[d].l+'</strong> &mdash; '+VM[d].d+'</p></div>';
+  }
+  return '<div class="rsec"><h3>Vos valeurs fondamentales</h3>'+bars
+    +'<div class="codeblk"><div class="cblbl">Vos 3 valeurs dominantes</div>'
+    +'<div class="cbval">'+top3.map(function(d){return VM[d].l;}).join(' \u00b7 ')+'</div></div></div>'
+    +'<div class="rsec"><h3>Ce que disent vos valeurs dominantes</h3>'+top3html+'</div>';
+}
+
+function htmlO(r){
+  var bars='',i,d;
+  for(i=0;i<r.sorted.length;i++){
+    d=r.sorted[i];
+    bars+='<div class="bitem"><div class="brow"><span class="bname">'+OM[d].e+' '+OM[d].l+'</span><span class="bscore">'+r.pcts[d]+'%</span></div>'
+      +'<div class="btrack"><div class="bfill" data-w="'+r.pcts[d]+'" style="width:0"></div></div></div>';
+  }
+  var label1=r.sorted.slice(0,3).map(function(d){return OM[d].l;}).join(' \u00b7 ');
+  var code3=r.sorted[0]+r.sorted[1]+r.sorted[2];
+  var riasecUrl='http://deporientation.free.fr/RechercheRIASEC-ROME/Recherche-ROME-RIASEC_002.php';
+  var riasecSec='<div class="rsec">'
+    +'<h3>Explorer les m\u00e9tiers de votre profil</h3>'
+    +'<div style="background:rgba(44,95,122,.06);border-left:3px solid var(--p);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;">'
+    +'<div style="font-size:.72rem;color:var(--tl);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;">Votre code Holland</div>'
+    +'<div style="font-family:Georgia,serif;font-size:1.6rem;font-weight:600;color:var(--pd);letter-spacing:.15em;">'+code3+'</div>'
+    +'<div style="font-size:.81rem;color:var(--tl);margin-top:4px;">'+label1+'</div></div>'
+    +'<div style="background:rgba(7,79,106,.05);border-radius:12px;padding:20px;margin-bottom:14px;">'
+    +'<div style="font-size:.85rem;font-weight:600;color:var(--pd);margin-bottom:10px;">Moteur de recherche m\u00e9tiers RIASEC-ROME</div>'
+    +'<p style="font-size:.82rem;color:var(--tx);line-height:1.7;margin-bottom:14px;">Utilisez le moteur de recherche ci-dessous pour d\u00e9couvrir les fiches m\u00e9tiers correspondant \u00e0 votre profil Holland.</p>'
+    +'<div style="background:rgba(233,113,50,.08);border-left:3px solid var(--o);border-radius:0 8px 8px 0;padding:13px 15px;margin-bottom:16px;">'
+    +'<div style="font-size:.75rem;font-weight:600;color:var(--od);margin-bottom:8px;">Mode d\u2019emploi</div>'
+    +'<ol style="font-size:.81rem;color:var(--tx);line-height:1.85;padding-left:16px;">'
+    +'<li>Cliquez sur le bouton ci-dessous pour ouvrir le moteur</li>'
+    +'<li>Faites d\u00e9filer jusqu\u2019au bloc <strong>M\u00e9thode J. Holland</strong> (dernier pav\u00e9)</li>'
+    +'<li>Saisissez vos lettres dans l\u2019ordre d\u00e9croissant : <strong>'+r.sorted[0]+', '+r.sorted[1]+', '+r.sorted[2]+'</strong></li>'
+    +'<li>Cliquez sur <strong>Rechercher</strong></li>'
+    +'<li style="font-weight:500;color:var(--pd);">Communiquez les fiches m\u00e9tiers retenues \u00e0 votre consultant</li>'
+    +'</ol></div>'
+    +'<a href="'+riasecUrl+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:#2C5F7A;color:white;border-radius:8px;text-decoration:none;font-size:.84rem;font-weight:500;">'
+    +'\ud83d\udd17 Ouvrir le moteur de recherche RIASEC</a>'
+    +'<div style="font-size:.73rem;color:var(--tl);margin-top:9px;">Source : deporientation.free.fr \u2014 Base ROME France Travail</div>'
+    +'</div></div>';
+  var descs='';
+  for(i=0;i<3&&i<r.sorted.length;i++){
+    d=r.sorted[i];
+    descs+='<div class="pdesc"><p><strong>'+OM[d].e+' '+OM[d].l+' :</strong> '+OM[d].d+'</p></div>';
+  }
+  return '<div class="rsec"><h3>Vos six orientations</h3>'+bars
+    +'<div class="codeblk"><div class="cblbl">Votre code d\'orientation RELIANCE\u00ae</div>'
+    +'<div class="cbval">'+r.sorted.slice(0,3).join(' \u00b7 ')+'</div>'
+    +'<div class="cbsub">'+label1+'</div></div></div>'
+    +riasecSec
+    +'<div class="rsec"><h3>Ce que disent vos orientations dominantes</h3>'+descs+'</div>';
+}
+
+function htmlS(r){
+  var ti=MBTI[r.type]||{n:'Profil singulier',d:'Votre profil est unique, \u00e0 explorer en entretien.'};
+  // calcS returns pcts:{E,I,S,N,T,F,J,P,A,Tu}
+  var p=r.pcts||{};
+  var axes=[
+    {left:'Extraverti(e)',right:'Introverti(e)',lv:p.E||50,rv:p.I||50},
+    {left:'Sensoriel(le)',right:'Intuitif(ve)',lv:p.S||50,rv:p.N||50},
+    {left:'Analytique',right:'Empathique',lv:p.T||50,rv:p.F||50},
+    {left:'Organis\u00e9(e)',right:'Flexible',lv:p.J||50,rv:p.P||50},
+    {left:'Assertif(ve)',right:'Turbulent(e)',lv:p.A||50,rv:p.Tu||50}
+  ];
+  var axHtml='',i,ax;
+  for(i=0;i<axes.length;i++){
+    ax=axes[i];
+    axHtml+='<div class="aitem"><div class="arow">'
+      +'<span class="albl '+(ax.lv>=ax.rv?'act':'')+'">'+ax.left+'</span>'
+      +'<span style="font-size:.72rem;color:var(--tl);">'+ax.lv+'% / '+ax.rv+'%</span>'
+      +'<span class="albl '+(ax.rv>ax.lv?'act':'')+'">'+ax.right+'</span></div>'
+      +'<div class="atrack"><div class="afill" data-w="'+ax.lv+'" style="width:0"></div></div></div>';
+  }
+  return '<div class="rsec"><h3>Votre signature comportementale</h3>'+axHtml
+    +'<div class="codeblk"><div class="cblbl">Votre type RELIANCE\u00ae</div>'
+    +'<div class="cbval">'+r.type+'-'+r.variant+'</div>'
+    +'<div class="cbsub">'+ti.n+'</div></div></div>'
+    +'<div class="rsec"><h3>Votre profil en bref</h3>'
+    +'<div class="pdesc"><p>'+ti.d+'</p></div></div>';
+}
+
+async function showRes(tid,r){
+  ss('screen-results');
+  var m=TM[tid];
+  document.getElementById('rlbl').textContent=m.sub;
+  document.getElementById('rh2').textContent=m.title;
+  document.getElementById('runame').textContent=S.user||'';
+  document.getElementById('rdt').textContent=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  var html='';
+  if(tid==='valeurs'){
+    html=htmlV(r);
+    // Top 3 valeurs
+    var i,rv2;
+    for(i=0;i<3&&i<r.sorted.length;i++){
+      rv2=await loadRapport('valeurs',r.sorted[i]);
+      if(rv2)html+=renderRapportValeur(r.sorted[i],rv2);
+    }
+  } else if(tid==='orient'){
+    html=htmlO(r);
+    // Top 2 RIASEC
+    var i2,rr2;
+    for(i2=0;i2<2&&i2<r.sorted.length;i2++){
+      rr2=await loadRapport('orient',r.sorted[i2]);
+      if(rr2)html+=renderRapportRiasec(r.sorted[i2],rr2);
+    }
+  } else {
+    html=htmlS(r);
+    if(r.type){var rm=await loadRapport('signat',r.type);if(rm)html+=renderRapportMbti(r.type,rm);}
+  }
+  html+=htmlCodeBox(r._code||'');
+  html+='<div class="ract"><button class="btn-pdf" onclick="window.print()">Imprimer / PDF</button>'
+    +'<button class="btn-bdash" onclick="showDash()">\u2190 Tableau de bord</button></div>';
+  document.getElementById('rbody').innerHTML=html;
+  setTimeout(function(){
+    var bf=document.querySelectorAll('.bfill'),i;for(i=0;i<bf.length;i++)bf[i].style.width=(bf[i].dataset.w||0)+'%';
+    var af=document.querySelectorAll('.afill');for(i=0;i<af.length;i++)af[i].style.width=(af[i].dataset.w||0)+'%';
+  },120);
+}
+function showResState(tid){if(S.results[tid])showRes(tid,S.results[tid]);}
+
+function htmlCodeBox(rc){
+  return '<div class="rcodebox"><p><strong>Votre code r\u00e9sultat</strong><br>'
+    +'Communiquez ce code \u00e0 votre consultant.<br>'
+    +'<span style="font-size:.74rem;opacity:.55">Code valable 90 jours.</span></p>'
+    +'<div class="rcbig" id="rcbig">'+rc+'</div>'
+    +'<div><button class="btn-cpr" id="btn-cpr">Copier le code</button>'
+    +'<button class="btn-eml" id="btn-eml">Envoyer par email</button></div></div>';
+}
+
+function swAdm(tab,el){
+  var tabs=document.querySelectorAll('.atab'),panels=document.querySelectorAll('.apanel'),i;
+  for(i=0;i<tabs.length;i++)tabs[i].classList.remove('act');
+  el.classList.add('act');
+  for(i=0;i<panels.length;i++)panels[i].classList.remove('act');
+  document.getElementById('panel-'+tab).classList.add('act');
+  if(tab==='resultats')renderRes();
+  if(tab==='consultants'){renderCo();setCoExp();}
+}
+
+async function renderCl(){
+  document.getElementById('tbl-cl').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--tl);">Chargement...</td></tr>';
+  var codes=await loadCodes(),html='',i,c,exp,badge,icons,dt,cds,cbadge;
+  for(i=0;i<codes.length;i++){
+    c=codes[i];if(c.isConsultant)continue;
+    if(S.role==='consultant'&&c.createdBy!==S.code.code)continue;
+    exp=c.expiry&&new Date(c.expiry)<new Date();
+    badge=exp?'<span class="b-ex">Expir\u00e9</span>':'<span class="b-ok">Actif</span>';
+    icons='';if(c.tests){var t;for(t=0;t<c.tests.length;t++)icons+=TM[c.tests[t]]?TM[c.tests[t]].icon:'';}
+    dt=c.expiry?new Date(c.expiry).toLocaleDateString('fr-FR'):'\u2014';
+    cds=c.consentDate?new Date(c.consentDate).toLocaleDateString('fr-FR'):'\u2014';
+    cbadge=c.consentGiven?'<span class="b-ok">\u2713 '+cds+'</span>':'<span class="b-ex">En attente</span>';
+    var consName=c.createdBy==='dirigeant'?'Dirigeant':(codes.find(function(x){return x.code===c.createdBy;})||{clientName:c.createdBy}).clientName;
+    var createdByLabel=c.createdBy==='dirigeant'?'<span style="font-size:.75rem;color:var(--tl);">Dirigeant</span>':'<span style="font-size:.75rem;color:var(--p);font-weight:500;">'+esc(consName)+'</span>';
+    html+='<tr><td><span class="cv">'+c.code+'</span></td><td>'+esc(c.clientName)+'</td><td>'+icons+'</td><td>'+dt+'</td><td>'+createdByLabel+'</td><td>'+cbadge+'</td><td>'+badge+'</td>'
+      +'<td><button class="bsm" data-code="'+c.code+'" onclick="clip(this.dataset.code)">Copier</button>'
+      +' <button class="bsm-del" data-code="'+c.code+'" onclick="delClByCode(this.dataset.code)">\u2715</button></td></tr>';
+  }
+  document.getElementById('tbl-cl').innerHTML=html||'<tr><td colspan="7" class="nodata">Aucun code client.</td></tr>';
+}
+async function delClByCode(code){if(!confirm('Supprimer ce code ?'))return;try{await deleteCode(code);await renderCl();toast('Code supprim\u00e9.');}catch(e){toast('Erreur.');}}
+function delCl(i){delClByCode(i);}
+function setCoExp(){var el=document.getElementById('nco-exp');if(el&&!el.value){var d=new Date();d.setFullYear(d.getFullYear()+1);el.value=d.toISOString().slice(0,10);}}
+
+async function createClient(){
+  var n=document.getElementById('nc-n').value.trim(),e=document.getElementById('nc-e').value.trim();
+  var exp=document.getElementById('nc-exp').value,ce=document.getElementById('nc-ce').value.trim();
+  var cu=document.getElementById('nc-cu').value.trim().toUpperCase();
+  if(!n){toast('Entrez le nom du client.');return;}
+  if(!exp){toast("Choisissez une date d'expiration.");return;}
+  var tests=[];
+  if(document.getElementById('ck-v').checked)tests.push('valeurs');
+  if(document.getElementById('ck-o').checked)tests.push('orient');
+  if(document.getElementById('ck-s').checked)tests.push('signat');
+  if(!tests.length){toast('S\u00e9lectionnez au moins un test.');return;}
+  var code=cu||genCode();
+  try{
+    await saveCode({code:code,clientName:n,clientEmail:e,consultantEmail:ce,expiry:exp,tests:tests,isConsultant:false,createdBy:S.role==='admin'?'dirigeant':(S.code&&S.code.code)||'consultant'});
+    document.getElementById('nc-n').value='';document.getElementById('nc-cu').value='';
+    await renderCl();toast('\u2713 Code '+code+' cr\u00e9\u00e9 pour '+n);
+  }catch(e2){toast('Erreur : '+e2.message);}
+}
+
+async function renderCo(){
+  var el=document.getElementById('tbl-co');if(!el)return;
+  el.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--tl);">Chargement...</td></tr>';
+  var codes=await loadCodes(),cons=codes.filter(function(c){return c.isConsultant;}),html='',i,c,exp,active,badge,icons,dt,sl;
+  for(i=0;i<cons.length;i++){
+    c=cons[i];exp=c.expiry&&new Date(c.expiry)<new Date();active=c.active!==false&&!exp;
+    badge=active?'<span class="b-ok">Actif</span>':(exp?'<span class="b-ex">Expir\u00e9</span>':'<span class="b-su">Suspendu</span>');
+    icons='';if(c.tests){var t;for(t=0;t<c.tests.length;t++)icons+=TM[c.tests[t]]?TM[c.tests[t]].icon:'';}
+    dt=c.expiry?new Date(c.expiry).toLocaleDateString('fr-FR'):'\u2014';sl=active?'Suspendre':'R\u00e9activer';
+    html+='<tr><td><span class="cv">'+c.code+'</span></td><td>'+esc(c.clientName)+'</td><td style="font-size:.76rem;">'+(c.clientEmail||'\u2014')+'</td><td>'+icons+'</td><td>'+dt+'</td><td>'+badge+'</td>'
+      +'<td><button class="bsm" data-code="'+c.code+'" onclick="clip(this.dataset.code)">Copier</button>'
+      +' <button class="bsm-sus" data-code="'+c.code+'" data-exp="'+(c.expiry||'')+'" onclick="toggleCoByCode(this.dataset.code,this.dataset.exp)">'+sl+'</button>'
+      +' <button class="bsm-del" data-code="'+c.code+'" onclick="delCoByCode(this.dataset.code)">\u2715</button></td></tr>';
+  }
+  el.innerHTML=html||'<tr><td colspan="7" class="nodata">Aucun consultant cr\u00e9\u00e9.</td></tr>';
+}
+
+async function createConsultant(){
+  var n=document.getElementById('nco-n').value.trim(),e=document.getElementById('nco-e').value.trim(),exp=document.getElementById('nco-exp').value;
+  if(!n){toast('Entrez le nom du consultant.');return;}if(!exp){toast("Choisissez une date d'expiration.");return;}
+  var tests=[];
+  if(document.getElementById('ck-cov').checked)tests.push('valeurs');
+  if(document.getElementById('ck-coo').checked)tests.push('orient');
+  if(document.getElementById('ck-cos').checked)tests.push('signat');
+  if(!tests.length){toast('S\u00e9lectionnez au moins un test.');return;}
+  var code=genConsCode();
+  try{
+    await saveCode({code:code,clientName:n,clientEmail:e,consultantEmail:e,expiry:exp,tests:tests,isConsultant:true,createdBy:'dirigeant'});
+    document.getElementById('nco-n').value='';document.getElementById('nco-e').value='';
+    await renderCo();toast('\u2713 Consultant cr\u00e9\u00e9 : '+code);
+  }catch(err){toast('Erreur : '+err.message);}
+}
+
+async function toggleCoByCode(code,currentExpiry){
+  var codes=await loadCodes(),c=codes.find(function(x){return x.code===code;});if(!c)return;
+  try{await updateCodeExpiry(code,c.active?'2000-01-01':currentExpiry);await renderCo();toast(c.active?'Acc\u00e8s suspendu.':'Consultant r\u00e9activ\u00e9.');}catch(e){toast('Erreur.');}
+}
+function toggleCo(i){toast('Utilisez les boutons par code.');}
+async function delCoByCode(code){
+  if(!confirm('Supprimer d\u00e9finitivement ce consultant ?'))return;
+  try{await deleteCode(code);await renderCo();await renderCl();toast('Consultant supprim\u00e9.');}catch(e){toast('Erreur.');}
+}
+
+async function renderRes(){
+  var el=document.getElementById('res-list');
+  el.innerHTML='<div class="nodata">Chargement...</div>';
+  var arr=await loadResults();
+  if(S.role==='consultant'){
+    var mc=await loadCodes(),ml=mc.filter(function(c){return c.createdBy===S.code.code&&!c.isConsultant;}).map(function(c){return c.code;});
+    arr=arr.filter(function(r){return ml.indexOf(r.accessCode)>-1;});
+  }
+  if(!arr.length){el.innerHTML='<div class="nodata">Aucun r\u00e9sultat.</div>';return;}
+  var html='',i,r,m;
+  for(i=0;i<arr.length;i++){
+    r=arr[i];m=TM[r.test];
+    html+='<div class="rentry"><div class="rentry-h"><div class="rentry-n">'+esc(r.client)+'</div>'
+      +'<div style="display:flex;gap:7px;align-items:center;"><div class="rentry-d">'+new Date(r.date).toLocaleDateString('fr-FR')+'</div>'
+      +'<button class="btn-view" data-idx="'+i+'" onclick="viewRes(parseInt(this.dataset.idx))">Voir</button></div></div>'
+      +'<div><span class="tbadge">'+(m?m.icon+' '+m.title:r.test)+'</span></div><div class="rcode">Code : '+r.code+'</div></div>';
+  }
+  el.innerHTML=html;window._resCache=arr;
+}
+
+async function viewRes(idx){
+  var arr=window._resCache||[],r=arr[idx];if(!r)return;
+  // Reconstruct result object compatible with showRes
+  var res=r.data||{};
+  res._code=r.code;
+  res._date=r.date;
+  res._client=r.client;
+  res._test=r.test;
+  // Switch to results screen
+  await showRes(r.test,res);
+  // Add back button to admin
+  var ract=document.querySelector('.ract');
+  if(ract){
+    var backBtn=document.createElement('button');
+    backBtn.className='btn-bdash';
+    backBtn.textContent='\u2190 Retour aux r\u00e9sultats';
+    backBtn.onclick=function(){goAdmin();setTimeout(function(){swAdm('resultats',document.querySelector('.atab'));},100);};
+    ract.appendChild(backBtn);
+  }
+}
+
+function showResDetail(r){
+  var m=TM[r.test],d=r.data,html='',i,dim;
+  html='<h3>'+(m?m.title:r.test)+'</h3><p style="font-size:.81rem;color:var(--tl);margin-bottom:16px;">Client : <strong>'+esc(r.client)+'</strong> \u00b7 '+new Date(r.date).toLocaleDateString('fr-FR')+' \u00b7 Code : <strong>'+r.code+'</strong></p>';
+  if(r.test==='valeurs'&&d.sorted){for(i=0;i<5&&i<d.sorted.length;i++){dim=d.sorted[i];html+='<div style="margin-bottom:8px;font-size:.82rem;">'+(i+1)+'. '+VM[dim].l+' \u2014 '+d.scores[dim].toFixed(1)+'/6<div style="height:5px;background:#EDE9E1;border-radius:3px;margin-top:3px;"><div style="height:5px;width:'+Math.round(d.scores[dim]/6*100)+'%;background:linear-gradient(90deg,#2C5F7A,#E97132);border-radius:3px;"></div></div></div>';}}
+  if(r.test==='orient'&&d.sorted){html+='<p style="font-size:.86rem;margin-bottom:10px;"><strong>Code : </strong>'+d.sorted.slice(0,3).join(' \u00b7 ')+'</p>';for(i=0;i<d.sorted.length;i++){dim=d.sorted[i];html+='<div style="font-size:.79rem;margin-bottom:5px;">'+OM[dim].e+' '+OM[dim].l+' : '+d.pcts[dim]+'%<div style="height:5px;background:#EDE9E1;border-radius:3px;margin-top:2px;"><div style="height:5px;width:'+d.pcts[dim]+'%;background:linear-gradient(90deg,#2C5F7A,#E97132);border-radius:3px;"></div></div></div>';}}
+  if(r.test==='signat'&&d.type){var ti=MBTI[d.type]||{n:'',d:''};html+='<p style="font-size:1.05rem;margin-bottom:6px;"><strong>'+d.type+'-'+d.variant+'</strong> \u2014 '+ti.n+'</p><p style="font-size:.81rem;color:var(--tl);">'+ti.d+'</p>';}
+  document.getElementById('m-rescont').innerHTML=html;openM('m-resdet');
+}
+
+async function lookupRes(){
+  var code=document.getElementById('res-lu').value.trim().toUpperCase();
+  try{var rows=await sbGet('resultats','result_code=eq.'+code+'&limit=1');
+    if(!rows||!rows.length){toast('Code introuvable.');return;}
+    showResDetail({code:rows[0].result_code,client:rows[0].client_name,test:rows[0].test_id,data:rows[0].data,date:rows[0].created_at});
+  }catch(e){toast('Erreur recherche.');}
+}
+
+function copyDevPrompt(){var el=document.getElementById('devprompt');if(!el)return;navigator.clipboard.writeText(el.textContent).then(function(){toast('Copi\u00e9 !');});}
+
+function exportConsentements(){
+  loadCodes().then(function(codes){
+    var rows=[['Code','Client','Email','Consentement','Date','Expiration','Statut']];
+    codes.forEach(function(c){
+      if(c.isConsultant)return;
+      rows.push([c.code,c.clientName,c.clientEmail||'',c.consentGiven?'Oui':'Non',
+        c.consentDate?new Date(c.consentDate).toLocaleDateString('fr-FR'):'',
+        c.expiry?new Date(c.expiry).toLocaleDateString('fr-FR'):'',
+        c.expiry&&new Date(c.expiry)<new Date()?'Expir\u00e9':'Actif']);
+    });
+    var csv=rows.map(function(r){return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(';');}).join('\n');
+    var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download='consentements_'+new Date().toISOString().slice(0,10)+'.csv';
+    a.click();URL.revokeObjectURL(url);toast('Export t\u00e9l\u00e9charg\u00e9');
+  });
+}
+
+async function goAdmin(){
+  ss('screen-admin');
+  if(S.role==='consultant'){
+    var tabs=document.querySelectorAll('.atab');
+    for(var ti=0;ti<tabs.length;ti++){if(tabs[ti].textContent.indexOf('Consultant')>-1)tabs[ti].style.display='none';}
+    var pc=document.getElementById('panel-consultants');if(pc)pc.style.display='none';
+  }
+  await renderCl();
+  if(S.role!=='consultant')await renderCo();
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var ll=document.getElementById('logo-login'),ld=document.getElementById('logo-dash');
+  if(ll)ll.src=LOGO_URI;if(ld)ld.src=LOGO_URI;
+  var d=new Date();d.setMonth(d.getMonth()+6);
+  var el=document.getElementById('nc-exp');if(el)el.value=d.toISOString().slice(0,10);
+  document.getElementById('inp-code').addEventListener('keypress',function(e){if(e.key==='Enter')doLogin();});
+  document.getElementById('inp-name').addEventListener('keypress',function(e){if(e.key==='Enter')doLogin();});
+  document.getElementById('admpw').addEventListener('keypress',function(e){if(e.key==='Enter')doAdminLogin();});
+  var moverlays=document.querySelectorAll('.moverlay');
+  for(var mi=0;mi<moverlays.length;mi++){(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});})(moverlays[mi]);}
+  document.getElementById('rbody').addEventListener('click',function(e){
+    if(e.target&&e.target.id==='btn-cpr'){var rc=document.getElementById('rcbig');if(rc)navigator.clipboard.writeText(rc.textContent).then(function(){toast('Code copi\u00e9 !');});}
+    if(e.target&&e.target.id==='btn-eml'){var rc=document.getElementById('rcbig');if(!rc)return;
+      var code=rc.textContent,consEmail=(S.code&&S.code.consultantEmail)||'';
+      var subj=encodeURIComponent('R\u00e9sultats RELIANCE\u00ae \u2014 '+(S.user||''));
+      var bd=encodeURIComponent('Bonjour,\n\nCode r\u00e9sultat : '+code+'\n\nCordialement,\n'+(S.user||''));
+      window.open('mailto:'+consEmail+'?subject='+subj+'&body='+bd);}
+  });
+});
+
+</script>
+</body>
+</html>
